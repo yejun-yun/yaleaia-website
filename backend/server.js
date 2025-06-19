@@ -7,16 +7,20 @@ const path = require('path');
 const fs = require('fs');
 const admin = require('firebase-admin');
 
-// Load environment variables
+// Load environment variables (optional for Railway deployment)
 const envPath = path.resolve(__dirname, '.env');
 console.log('Checking for .env file at:', envPath);
 console.log('.env file exists:', fs.existsSync(envPath));
 
-const result = dotenv.config();
-if (result.error) {
-    console.error('Error loading .env file:', result.error);
+if (fs.existsSync(envPath)) {
+    const result = dotenv.config();
+    if (result.error) {
+        console.error('Error loading .env file:', result.error);
+    } else {
+        console.log('Environment variables loaded successfully from .env file');
+    }
 } else {
-    console.log('Environment variables loaded successfully');
+    console.log('No .env file found - using environment variables from Railway');
 }
 
 // Initialize Firebase Admin SDK
@@ -24,6 +28,12 @@ if (result.error) {
 // or initialize with a service account object.
 // For simplicity in .env, we'll assume GOOGLE_APPLICATION_CREDENTIALS path for now.
 // Or, you can parse the service account JSON from an env var.
+
+// Debug environment variables
+console.log('Environment variables check:');
+console.log('OPENAI_API_KEY exists:', !!process.env.OPENAI_API_KEY);
+console.log('ANTHROPIC_API_KEY exists:', !!process.env.ANTHROPIC_API_KEY);
+console.log('FIREBASE_SERVICE_ACCOUNT_KEY_JSON exists:', !!process.env.FIREBASE_SERVICE_ACCOUNT_KEY_JSON);
 
 let serviceAccount;
 try {
