@@ -1,0 +1,33 @@
+.notificationbar {
+    background-color: white;
+    padding: .5rem 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    margin-bottom: 1000px;
+    box-shadow: var(--shadow-standard-light); /* Added for better light mode visibility */
+    font-size: small;
+  }
+  
+  .navbar-logo a {
+    color: var(--primary-dark-blue);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .navbar-links a {
+    color: var(--text-primary-light);
+    text-decoration: none;
+    margin-right: 4rem;
+    margin-left: -2rem;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-links a:hover {
+    color: var(--secondary-dark-blue);
+  }

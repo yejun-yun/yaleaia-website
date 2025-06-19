@@ -1,0 +1,205 @@
+/* Fellowship Section Styling */
+.fellowship-section {
+  background-color: var(--white);
+  padding: 10rem 0;
+  position: relative;
+}
+
+.fellowship-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.fellowship-description {
+  margin: 3rem 0;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.topics-list {
+  margin: 2.5rem 0;
+  padding-left: 3rem;
+  list-style: none;
+}
+
+.topics-list li {
+  margin-bottom: 1rem;
+  color: var(--text-primary-light);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  position: relative;
+}
+
+.topics-list li::before {
+  content: "•";
+  color: var(--primary-dark-blue);
+  font-weight: bold;
+  position: absolute;
+  left: -1.5rem;
+}
+
+.cta-links {
+  display: flex;
+  gap: 2rem;
+  margin-top: 3rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 49, 83, 0.1));
+}
+
+.link-button {
+  padding: clamp(0.6rem, 1.5vw, 1.2rem) clamp(1rem, 2vw, 2.5rem);
+  border-radius: var(--border-radius-standard);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: clamp(100px, 25vw, 160px);
+  white-space: nowrap;
+}
+
+.link-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: rgba(255, 255, 255, 0.1);
+  transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.link-button:hover::before {
+  height: 500%;
+}
+
+.link-button.primary {
+  background: linear-gradient(135deg, var(--primary-dark-blue), var(--secondary-dark-blue));
+  color: var(--white);
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 49, 83, 0.15);
+}
+
+.link-button.secondary {
+  background-color: var(--off-white);
+  color: var(--text-primary-light);
+  border: 2px solid var(--primary-dark-blue);
+  box-shadow: 0 2px 8px rgba(0, 49, 83, 0.05);
+}
+
+.link-button:hover {
+  box-shadow: 0 2px 12px rgba(0, 49, 83, 0.2);
+}
+
+/* FAQ Section Styling */
+.faq-section {
+  margin-top: 8rem;
+  width: 100%;
+}
+
+.faq-section h3 {
+  margin-bottom: 4rem;
+  color: var(--text-primary-light);
+  font-size: 2.2rem;
+  text-align: center;
+}
+
+.faq-grid {
+  display: block;
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+  margin-bottom: 0;
+  transition: all 0.3s ease;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: -1px;
+}
+
+.faq-item:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.faq-item h4 {
+  color: var(--primary-dark-blue);
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-item h4::after {
+  content: '+';
+  font-size: 1.5rem;
+  font-weight: 300;
+  transition: transform 0.3s ease;
+  color: var(--primary-dark-blue);
+}
+
+.faq-item.active {
+  background-color: rgba(0, 0, 0, 0.01);
+}
+
+.faq-item.active h4::after {
+  content: '−';
+  transform: rotate(0deg);
+}
+
+.faq-item p {
+  color: var(--text-primary-light);
+  line-height: 1.6;
+  font-size: 1.1rem;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  margin-top: 0;
+}
+
+.faq-item.active p {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .fellowship-section {
+    padding: 8rem 0;
+  }
+
+  .fellowship-content {
+    padding: 0 2rem;
+  }
+
+  .faq-grid {
+    display: block;
+    gap: 2rem;
+  }
+
+  .cta-links {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .link-button {
+    width: calc(100% - 2rem);
+    text-align: center;
+    min-width: unset;
+    margin: 0 auto;
+  }
+}

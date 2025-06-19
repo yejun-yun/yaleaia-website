@@ -1,0 +1,80 @@
+/* Contact.css */
+.contact {
+    padding-top: 80px;
+  }
+  
+  .contact-header {
+    background-color: var(--primary-blue);
+    color: var(--light-text);
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  
+  .contact-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+  }
+  
+  .contact-info {
+    padding: 2rem;
+    background-color: var(--light-blue);
+    border-radius: 10px;
+    height: fit-content;
+  }
+  
+  .info-item {
+    margin: 1.5rem 0;
+  }
+  
+  .contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: inherit;
+  }
+  
+  .form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+  
+  .submit-button {
+    background-color: var(--primary-blue);
+    color: var(--light-text);
+    border: none;
+    padding: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: var(--secondary-blue);
+  }
+  
+  @media (max-width: 768px) {
+    .contact-content {
+      grid-template-columns: 1fr;
+    }
+  }
