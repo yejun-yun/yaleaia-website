@@ -59,7 +59,18 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000', // Local development
+    'https://yaleaia-website.vercel.app', // Vercel deployment
+    'https://yaleaia-website-frontend.vercel.app', // Alternative Vercel URL
+    'https://yaleaia.org', // Custom domain
+    'https://www.yaleaia.org' // Custom domain with www
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 // Authentication middleware (to be refined)
@@ -82,6 +93,20 @@ async function authMiddleware(req, res, next) {
 // Routes
 app.use('/api/test', (req, res) => {
     res.json({ status: 'ok', message: 'API is working', env: { openai_key_exists: !!process.env.OPENAI_API_KEY } });
+});
+
+// Health check endpoint (no auth required)
+app.get('/health', (req, res) => {
+    res.json({ 
+        status: 'ok', 
+        message: 'Backend is running',
+        timestamp: new Date().toISOString(),
+        env: { 
+            openai_key_exists: !!process.env.OPENAI_API_KEY,
+            anthropic_key_exists: !!process.env.ANTHROPIC_API_KEY,
+            firebase_configured: !!process.env.FIREBASE_SERVICE_ACCOUNT_KEY_JSON
+        }
+    });
 });
 
 app.use('/api', authMiddleware, apiRoutes);
