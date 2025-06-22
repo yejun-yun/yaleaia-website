@@ -1,9 +1,83 @@
 /* index.css */
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif; /* Primary font change here */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f8f9fa;
+  color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode global styles */
+body.dark-mode {
+  background: #1a1a1a;
+  color: #e1e1e1;
+}
+
+body.dark-mode * {
+  scrollbar-color: #4a5568 #2d3748;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #2d3748;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: #4a5568;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: #718096;
+}
+
+/* Code block styling */
+pre {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+}
+
+code {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions for interactive elements */
+button, input, textarea, select {
+  transition: all 0.2s ease;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(102, 126, 234, 0.3);
+}
+
+body.dark-mode ::selection {
+  background: rgba(102, 126, 234, 0.5);
 }
 
 

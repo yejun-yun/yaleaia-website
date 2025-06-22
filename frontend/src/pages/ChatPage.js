@@ -18,11 +18,6 @@ const ChatPage = () => {
 
     return (
         <div className="chat-page">
-            <div className="chat-page-header">
-                <h1>AI Chat Assistant</h1>
-                <p>Chat with OpenAI's GPT or Anthropic's Claude AI models</p>
-            </div>
-            
             {showAuth ? (
                 <Auth onAuthSuccess={handleAuthSuccess} />
             ) : (

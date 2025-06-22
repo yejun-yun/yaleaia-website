@@ -75,17 +75,27 @@ app.use(express.json());
 
 // Authentication middleware (to be refined)
 async function authMiddleware(req, res, next) {
+  console.log('Auth middleware called for:', req.path);
+  console.log('Request headers:', Object.keys(req.headers));
+  
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    console.log('No valid authorization header found');
     return res.status(401).send({ error: 'Unauthorized: No token provided or malformed token.' });
   }
+  
   const idToken = authHeader.split('Bearer ')[1];
+  console.log('Token received, length:', idToken.length);
+  
   try {
     const decodedToken = await admin.auth().verifyIdToken(idToken);
+    console.log('Token verified successfully for user:', decodedToken.email);
     req.user = decodedToken; // Add user info to request object
     next();
   } catch (error) {
     console.error('Error verifying Firebase ID token:', error);
+    console.error('Error code:', error.code);
+    console.error('Error message:', error.message);
     return res.status(403).send({ error: 'Forbidden: Invalid token.' });
   }
 }
@@ -105,6 +115,18 @@ app.get('/health', (req, res) => {
             openai_key_exists: !!process.env.OPENAI_API_KEY,
             anthropic_key_exists: !!process.env.ANTHROPIC_API_KEY,
             firebase_configured: !!process.env.FIREBASE_SERVICE_ACCOUNT_KEY_JSON
+        }
+    });
+});
+
+// Test auth endpoint (requires authentication)
+app.get('/api/auth-test', authMiddleware, (req, res) => {
+    res.json({ 
+        status: 'ok', 
+        message: 'Authentication successful',
+        user: {
+            email: req.user.email,
+            uid: req.user.uid
         }
     });
 });

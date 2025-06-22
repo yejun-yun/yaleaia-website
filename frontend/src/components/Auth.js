@@ -47,7 +47,6 @@ const Auth = ({ onAuthSuccess }) => {
         <div className="auth-container">
             <div className="auth-card">
                 <h2>{isSignUp ? 'Sign Up' : 'Log In'}</h2>
-                <p className="auth-subtitle">Access the AI Chat Assistant</p>
                 
                 {error && <div className="error-message">{error}</div>}
                 
