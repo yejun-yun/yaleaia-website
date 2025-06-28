@@ -59,8 +59,11 @@ const Chat = ({ onLogout }) => {
         const userMessage = messages[messageIndex - 1];
         if (!userMessage || userMessage.sender !== 'user') return;
 
-        // Remove the AI response
-        setMessages(prev => prev.slice(0, messageIndex));
+        // The history is all messages up to and including the user message
+        const historyToResend = messages.slice(0, messageIndex);
+
+        // Remove the old AI response and any subsequent messages
+        setMessages(historyToResend);
         
         // Regenerate
         setIsLoading(true);
@@ -78,7 +81,13 @@ const Chat = ({ onLogout }) => {
                 return;
             }
 
-            const data = await fetchChatReply(userMessage.text, selectedModel, currentToken);
+            const apiMessages = historyToResend.map(msg => ({
+                role: msg.sender === 'ai' ? 'assistant' : 'user',
+                content: msg.text
+            }));
+
+
+            const data = await fetchChatReply(apiMessages, selectedModel, currentToken);
             const aiMessage = { 
                 sender: 'ai', 
                 text: data.reply, 
@@ -162,7 +171,10 @@ const Chat = ({ onLogout }) => {
             id: Date.now(),
             files: uploadedFiles.length > 0 ? [...uploadedFiles] : undefined
         };
-        setMessages(prevMessages => [...prevMessages, userMessage]);
+
+        const newMessages = [...messages, userMessage];
+        setMessages(newMessages);
+
         const currentInput = input;
         const currentFiles = [...uploadedFiles];
         setInput('');
@@ -182,6 +194,17 @@ const Chat = ({ onLogout }) => {
             ).join('\n');
             messageContent = `${messageContent}\n\n${fileInfo}`;
         }
+        
+        const apiMessages = newMessages.map(msg => {
+            let content = msg.text;
+            if (msg.sender === 'user' && msg.id === userMessage.id) {
+                content = messageContent;
+            }
+            return {
+                role: msg.sender === 'ai' ? 'assistant' : 'user',
+                content: content
+            };
+        });
 
         try {
             if (!idToken && !auth.currentUser) {
@@ -203,7 +226,7 @@ const Chat = ({ onLogout }) => {
             }
 
             try {
-                const data = await fetchChatReply(messageContent, selectedModel, currentToken, controller.signal);
+                const data = await fetchChatReply(apiMessages, selectedModel, currentToken, controller.signal);
                 const aiMessage = { 
                     sender: 'ai', 
                     text: data.reply, 
@@ -222,7 +245,7 @@ const Chat = ({ onLogout }) => {
                     currentToken = await refreshIdToken();
                     if (currentToken) {
                         console.log("Token refreshed, retrying API call...");
-                        const data = await fetchChatReply(messageContent, selectedModel, currentToken, controller.signal);
+                        const data = await fetchChatReply(apiMessages, selectedModel, currentToken, controller.signal);
                         const aiMessage = { 
                             sender: 'ai', 
                             text: data.reply, 
@@ -247,7 +270,7 @@ const Chat = ({ onLogout }) => {
             }
             console.error("Failed to send message:", err);
             setError(err.message || 'Failed to get response from the AI. Please try again.');
-            setMessages(prev => prev.filter(msg => msg !== userMessage));
+            setMessages(prev => prev.filter(msg => msg.id !== userMessage.id));
             setInput(currentInput);
             setUploadedFiles(currentFiles);
         }

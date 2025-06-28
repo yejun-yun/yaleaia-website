@@ -107,12 +107,12 @@ router.get('/test', (req, res) => {
 
 // Chat endpoint
 router.post('/chat', async (req, res) => {
-    const { message, model } = req.body;
+    const { messages, model } = req.body;
     // The user object is now available from the authMiddleware
     // console.log('Authenticated user:', req.user);
 
-    if (!message) {
-        return res.status(400).json({ error: 'Message is required' });
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
+        return res.status(400).json({ error: '`messages` is required and must be a non-empty array' });
     }
 
     // Get model configuration
@@ -125,7 +125,7 @@ router.post('/chat', async (req, res) => {
             if (model.includes('o1') || model.includes('o3')) {
                 const requestBody = {
                     model: modelConfig.model,
-                    messages: [{ role: "user", content: message }],
+                    messages: messages,
                     max_completion_tokens: Math.min(modelConfig.maxTokens || 4096, 4096)
                 };
                 
@@ -150,7 +150,7 @@ router.post('/chat', async (req, res) => {
             } else {
                 const completion = await openai.chat.completions.create({
                     model: modelConfig.model,
-                    messages: [{ role: "user", content: message }],
+                    messages: messages,
                     max_tokens: modelConfig.maxTokens,
                 });
                 reply = completion.choices[0].message.content;
@@ -159,9 +159,7 @@ router.post('/chat', async (req, res) => {
             const completion = await anthropic.messages.create({
                 model: modelConfig.model,
                 max_tokens: modelConfig.maxTokens,
-                messages: [
-                    { role: "user", content: message }
-                ]
+                messages: messages
             });
             reply = completion.content[0].text;
         } else {
