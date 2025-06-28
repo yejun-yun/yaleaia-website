@@ -19,83 +19,37 @@ const anthropic = new Anthropic({
 
 // Model configurations
 const MODEL_CONFIGS = {
-    // Latest OpenAI models
-    'o3': {
-        provider: 'openai',
-        model: 'o3',
-        maxTokens: 100000
-    },
-    'o3-mini': {
-        provider: 'openai',
-        model: 'o3-mini',
-        maxTokens: 65536
-    },
-    'gpt-4.1': {
-        provider: 'openai',
-        model: 'gpt-4.1',
-        maxTokens: 32768
-    },
-    'gpt-4.1-mini': {
-        provider: 'openai',
-        model: 'gpt-4.1-mini',
-        maxTokens: 16384
-    },
-    'o1': {
-        provider: 'openai',
-        model: 'o1',
-        maxTokens: 32768
-    },
-    'o1-mini': {
-        provider: 'openai',
-        model: 'o1-mini',
-        maxTokens: 16384
-    },
-    // Current OpenAI models
+    // OpenAI Models
     'gpt-4o': {
         provider: 'openai',
-        model: 'gpt-4o',
-        maxTokens: 4096
+        model: 'gpt-4o', // Most advanced, multimodal model
+        maxTokens: 4096 
     },
     'gpt-4o-mini': {
         provider: 'openai',
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o-mini', // Fast, affordable, and smart
         maxTokens: 16384
     },
     'gpt-3.5-turbo': {
         provider: 'openai',
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-3.5-turbo', // Legacy model
         maxTokens: 4096
     },
-    // Latest Anthropic models
-    'claude-4-sonnet': {
-        provider: 'anthropic',
-        model: 'claude-sonnet-4-20250514',
-        maxTokens: 64000
-    },
-    'claude-4-opus': {
-        provider: 'anthropic',
-        model: 'claude-opus-4-20250514',
-        maxTokens: 32000
-    },
-    'claude-3.7-sonnet': {
-        provider: 'anthropic',
-        model: 'claude-3-7-sonnet-20250219',
-        maxTokens: 64000
-    },
-    // Current Anthropic models
-    'claude-3-5-sonnet': {
-        provider: 'anthropic',
-        model: 'claude-3-5-sonnet-20241022',
-        maxTokens: 4096
-    },
-    'claude-3-5-haiku': {
-        provider: 'anthropic',
-        model: 'claude-3-5-haiku-20241022',
-        maxTokens: 4096
-    },
+
+    // Anthropic Models
     'claude-3-opus': {
         provider: 'anthropic',
-        model: 'claude-3-opus-20240229',
+        model: 'claude-3-opus-20240229', // Most powerful model for complex tasks
+        maxTokens: 4096
+    },
+    'claude-3.5-sonnet': {
+        provider: 'anthropic',
+        model: 'claude-3.5-sonnet-20240620', // Best balance of intelligence and speed
+        maxTokens: 8192
+    },
+    'claude-3-haiku': {
+        provider: 'anthropic',
+        model: 'claude-3-haiku-20240307', // Fastest and most compact model
         maxTokens: 4096
     }
 };
@@ -121,40 +75,12 @@ router.post('/chat', async (req, res) => {
     try {
         let reply;
         if (modelConfig.provider === 'openai') {
-            // Handle reasoning models (o1, o3-mini) differently
-            if (model.includes('o1') || model.includes('o3')) {
-                const requestBody = {
-                    model: modelConfig.model,
-                    messages: messages,
-                    max_completion_tokens: Math.min(modelConfig.maxTokens || 4096, 4096)
-                };
-                
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestBody)
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.choices && data.choices.length > 0) {
-                    reply = data.choices[0].message.content;
-                } else {
-                    const errorMessage = data.error ? data.error.message : "Could not get a response from the model.";
-                    console.error("OpenAI API error for reasoning model:", data);
-                    return res.status(response.status || 500).json({ error: `Model Error: ${errorMessage}` });
-                }
-            } else {
-                const completion = await openai.chat.completions.create({
-                    model: modelConfig.model,
-                    messages: messages,
-                    max_tokens: modelConfig.maxTokens,
-                });
-                reply = completion.choices[0].message.content;
-            }
+            const completion = await openai.chat.completions.create({
+                model: modelConfig.model,
+                messages: messages,
+                max_tokens: modelConfig.maxTokens,
+            });
+            reply = completion.choices[0].message.content;
         } else if (modelConfig.provider === 'anthropic') {
             const completion = await anthropic.messages.create({
                 model: modelConfig.model,

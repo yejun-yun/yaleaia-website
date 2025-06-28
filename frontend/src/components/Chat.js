@@ -12,7 +12,7 @@ const Chat = ({ onLogout }) => {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const [selectedModel, setSelectedModel] = useState('claude-4-sonnet');
+    const [selectedModel, setSelectedModel] = useState('claude-3.5-sonnet');
     const [searchQuery, setSearchQuery] = useState('');
     const [showSearch, setShowSearch] = useState(false);
     const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -365,29 +365,16 @@ const Chat = ({ onLogout }) => {
                         {currentUser?.email ? `Logged in as: ${currentUser.email}` : 'Not logged in'}
                     </div>
                     <div className="model-selector">
-                        <label htmlFor="model">Model: </label>
-                        <select 
-                            id="model" 
-                            value={selectedModel} 
-                            onChange={(e) => setSelectedModel(e.target.value)} 
-                            disabled={isLoading}
-                        >
+                        <select value={selectedModel} onChange={e => setSelectedModel(e.target.value)}>
                             <optgroup label="OpenAI">
-                                <option value="o3">o3 (Most Capable)</option>
-                                <option value="o3-mini">o3-mini (Fast Reasoning)</option>
-                                <option value="gpt-4.1">GPT-4.1 (Advanced)</option>
-                                <option value="gpt-4.1-mini">GPT-4.1 Mini (Efficient)</option>
-                                <option value="o1">o1 (Complex Reasoning)</option>
-                                <option value="o1-mini">o1-mini (Fast Reasoning)</option>
-                                <option value="gpt-4o">GPT-4o (Fast & Vision)</option>
+                                <option value="gpt-4o">GPT-4o</option>
                                 <option value="gpt-4o-mini">GPT-4o Mini</option>
-                                <option value="gpt-4-turbo">GPT-4 Turbo</option>
                                 <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
                             </optgroup>
                             <optgroup label="Anthropic">
-                                <option value="claude-4-sonnet">Claude 4 Sonnet</option>
-                                <option value="claude-4-opus">Claude 4 Opus</option>
-                                <option value="claude-3-7-sonnet">Claude 3.7 Sonnet</option>
+                                <option value="claude-3-opus">Claude 3 Opus</option>
+                                <option value="claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+                                <option value="claude-3-haiku">Claude 3 Haiku</option>
                             </optgroup>
                         </select>
                     </div>
