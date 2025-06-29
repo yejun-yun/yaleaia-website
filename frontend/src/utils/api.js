@@ -1,6 +1,6 @@
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://yaleaia-website-production.up.railway.app/api';
 
-export const fetchChatReply = async (messages, model, idToken, signal) => {
+export const fetchChatReply = async (messages, model, idToken, signal, temperature) => {
   if (!idToken) {
     throw new Error("No ID token provided. User might not be authenticated.");
   }
@@ -11,7 +11,7 @@ export const fetchChatReply = async (messages, model, idToken, signal) => {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`,
     },
-    body: JSON.stringify({ messages, model }),
+    body: JSON.stringify({ messages, model, temperature }),
     signal: signal,
   });
 

@@ -61,7 +61,7 @@ router.get('/test', (req, res) => {
 
 // Chat endpoint
 router.post('/chat', async (req, res) => {
-    const { messages, model } = req.body;
+    const { messages, model, temperature } = req.body;
     // The user object is now available from the authMiddleware
     // console.log('Authenticated user:', req.user);
 
@@ -71,6 +71,7 @@ router.post('/chat', async (req, res) => {
 
     // Get model configuration
     const modelConfig = MODEL_CONFIGS[model] || MODEL_CONFIGS['gpt-4o-mini']; // Default to gpt-4o-mini
+    const temp = temperature !== undefined && temperature !== null ? temperature : 0.7;
 
     try {
         let reply;
@@ -79,13 +80,16 @@ router.post('/chat', async (req, res) => {
                 model: modelConfig.model,
                 messages: messages,
                 max_tokens: modelConfig.maxTokens,
+                temperature: temp
             });
             reply = completion.choices[0].message.content;
         } else if (modelConfig.provider === 'anthropic') {
+            const safeTemperature = Math.max(0, Math.min(1, temp));
             const completion = await anthropic.messages.create({
                 model: modelConfig.model,
                 max_tokens: modelConfig.maxTokens,
-                messages: messages
+                messages: messages,
+                temperature: safeTemperature
             });
             reply = completion.content[0].text;
         } else {

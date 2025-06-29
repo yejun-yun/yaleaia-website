@@ -13,6 +13,7 @@ const Chat = ({ onLogout }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [selectedModel, setSelectedModel] = useState('claude-3.5-sonnet');
+    const [temperature, setTemperature] = useState(0.7);
     const [searchQuery, setSearchQuery] = useState('');
     const [showSearch, setShowSearch] = useState(false);
     const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -87,7 +88,7 @@ const Chat = ({ onLogout }) => {
             }));
 
 
-            const data = await fetchChatReply(apiMessages, selectedModel, currentToken);
+            const data = await fetchChatReply(apiMessages, selectedModel, currentToken, null, temperature);
             const aiMessage = { 
                 sender: 'ai', 
                 text: data.reply, 
@@ -226,7 +227,7 @@ const Chat = ({ onLogout }) => {
             }
 
             try {
-                const data = await fetchChatReply(apiMessages, selectedModel, currentToken, controller.signal);
+                const data = await fetchChatReply(apiMessages, selectedModel, currentToken, controller.signal, temperature);
                 const aiMessage = { 
                     sender: 'ai', 
                     text: data.reply, 
@@ -245,7 +246,7 @@ const Chat = ({ onLogout }) => {
                     currentToken = await refreshIdToken();
                     if (currentToken) {
                         console.log("Token refreshed, retrying API call...");
-                        const data = await fetchChatReply(apiMessages, selectedModel, currentToken, controller.signal);
+                        const data = await fetchChatReply(apiMessages, selectedModel, currentToken, controller.signal, temperature);
                         const aiMessage = { 
                             sender: 'ai', 
                             text: data.reply, 
@@ -360,56 +361,47 @@ const Chat = ({ onLogout }) => {
     return (
         <div className="chat-container">
             <header className="chat-header">
-                <div className="header-left">
-                    <div className="user-info">
-                        {currentUser?.email ? `Logged in as: ${currentUser.email}` : 'Not logged in'}
-                    </div>
-                    <div className="model-selector">
-                        <select value={selectedModel} onChange={e => setSelectedModel(e.target.value)}>
-                            <optgroup label="OpenAI">
-                                <option value="gpt-4o">GPT-4o</option>
-                                <option value="gpt-4o-mini">GPT-4o Mini</option>
-                                <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
-                            </optgroup>
-                            <optgroup label="Anthropic">
-                                <option value="claude-3-opus">Claude 3 Opus</option>
-                                <option value="claude-3.5-sonnet">Claude 3.5 Sonnet</option>
-                                <option value="claude-3-haiku">Claude 3 Haiku</option>
-                            </optgroup>
-                        </select>
-                    </div>
+                <div className="model-selector">
+                    <select value={selectedModel} onChange={e => setSelectedModel(e.target.value)}>
+                        <optgroup label="OpenAI">
+                            <option value="gpt-4o">GPT-4o</option>
+                            <option value="gpt-4o-mini">GPT-4o Mini</option>
+                            <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                        </optgroup>
+                        <optgroup label="Anthropic">
+                            <option value="claude-3-opus">Claude 3 Opus</option>
+                            <option value="claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+                            <option value="claude-3-haiku">Claude 3 Haiku</option>
+                        </optgroup>
+                    </select>
                 </div>
-                
-                <div className="header-center">
-                    <h2>Chat</h2>
+                <div className="temperature-slider">
+                    <label htmlFor="temperature">Temp: {temperature.toFixed(1)}</label>
+                    <input
+                        type="range"
+                        id="temperature"
+                        min="0"
+                        max="2"
+                        step="0.1"
+                        value={temperature}
+                        onChange={e => setTemperature(parseFloat(e.target.value))}
+                    />
                 </div>
-                
-                <div className="header-right">
-                    <button 
-                        onClick={() => setShowSearch(!showSearch)}
-                        className="header-btn header-btn--icon"
-                        title="Search messages"
-                    >
-                        🔍
+                <div className="header-actions">
+                    <button onClick={exportChat} title="Export Chat" className="icon-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
                     </button>
-                    <button 
-                        onClick={exportChat}
-                        className="header-btn"
-                        title="Export chat"
-                        disabled={messages.length === 0}
-                    >
-                        Export
+                    <button onClick={clearChat} title="Clear Chat" className="icon-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
                     </button>
-                    <button 
-                        onClick={clearChat}
-                        className="header-btn"
-                        title="Clear chat"
-                        disabled={messages.length === 0}
-                    >
-                        Clear
-                    </button>
-                    <button onClick={handleLogout} className="logout-button" disabled={isLoading}>
-                        Logout
+                    <button onClick={handleLogout} title="Logout" className="icon-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                        </svg>
                     </button>
                 </div>
             </header>
