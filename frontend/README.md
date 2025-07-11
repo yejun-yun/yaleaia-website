@@ -32,7 +32,7 @@ The AI chat interface now includes modern features found in popular LLM websites
 - **Clear Chat** - Start fresh with confirmation dialog
 
 ### 🔧 **Advanced Functionality**
-- **Model Selection** - Choose between OpenAI GPT-3.5 and Anthropic Claude
+- **Model Selection** - Choose between multiple OpenAI models (GPT-4o, o1, o3, o4-mini, GPT-4.5) and Anthropic Claude models (3 Opus, 3.5 Sonnet, 4 Sonnet)
 - **Typing Indicators** - Animated dots while AI is thinking
 - **Error Handling** - Better error messages and recovery
 - **Message Timestamps** - Detailed timestamps for all messages
@@ -112,7 +112,7 @@ REACT_APP_API_URL=http://localhost:5001/api
 
 1. Click on "AI Chat" in the navigation menu
 2. Sign up or log in using email/password or Google
-3. Choose between OpenAI (GPT-3.5) or Anthropic (Claude) models
+3. Choose between multiple OpenAI models (GPT-4o, o1, o3, o4-mini, GPT-4.5) and Anthropic Claude models (3 Opus, 3.5 Sonnet, 4 Sonnet)
 4. Start chatting with the AI using the modern interface
 
 ### Chat Features:

@@ -365,13 +365,16 @@ const Chat = ({ onLogout }) => {
                     <select value={selectedModel} onChange={e => setSelectedModel(e.target.value)}>
                         <optgroup label="OpenAI">
                             <option value="gpt-4o">GPT-4o</option>
-                            <option value="gpt-4o-mini">GPT-4o Mini</option>
-                            <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                            <option value="o1">o1 (Reasoning)</option>
+                            <option value="o3">o3 (Latest Reasoning)</option>
+                            <option value="o3-mini">o3-mini (Compact Reasoning)</option>
+                            <option value="o4-mini">o4-mini (Latest Multimodal)</option>
+                            <option value="gpt-4.5">GPT-4.5 (Enhanced)</option>
                         </optgroup>
                         <optgroup label="Anthropic">
                             <option value="claude-3-opus">Claude 3 Opus</option>
                             <option value="claude-3.5-sonnet">Claude 3.5 Sonnet</option>
-                            <option value="claude-3-haiku">Claude 3 Haiku</option>
+                            <option value="claude-4-sonnet">Claude 4 Sonnet</option>
                         </optgroup>
                     </select>
                 </div>
