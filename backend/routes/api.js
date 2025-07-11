@@ -25,15 +25,30 @@ const MODEL_CONFIGS = {
         model: 'gpt-4o', // Most advanced, multimodal model
         maxTokens: 4096 
     },
-    'gpt-4o-mini': {
+    'o1': {
         provider: 'openai',
-        model: 'gpt-4o-mini', // Fast, affordable, and smart
-        maxTokens: 16384
+        model: 'o1-preview', // Advanced reasoning model
+        maxTokens: 32768
     },
-    'gpt-3.5-turbo': {
+    'o3': {
         provider: 'openai',
-        model: 'gpt-3.5-turbo', // Legacy model
-        maxTokens: 4096
+        model: 'o3', // Latest reasoning model
+        maxTokens: 200000
+    },
+    'o3-mini': {
+        provider: 'openai',
+        model: 'o3-mini', // Compact reasoning model
+        maxTokens: 200000
+    },
+    'o4-mini': {
+        provider: 'openai',
+        model: 'o4-mini', // Latest compact model with multimodal capabilities
+        maxTokens: 200000
+    },
+    'gpt-4.5': {
+        provider: 'openai',
+        model: 'gpt-4.5', // Transitional model with enhanced capabilities
+        maxTokens: 8192
     },
 
     // Anthropic Models
@@ -47,10 +62,10 @@ const MODEL_CONFIGS = {
         model: 'claude-3.5-sonnet-20240620', // Best balance of intelligence and speed
         maxTokens: 8192
     },
-    'claude-3-haiku': {
+    'claude-4-sonnet': {
         provider: 'anthropic',
-        model: 'claude-3-haiku-20240307', // Fastest and most compact model
-        maxTokens: 4096
+        model: 'claude-4-sonnet-20250522', // Latest high-performance reasoning model
+        maxTokens: 64000
     }
 };
 
@@ -70,7 +85,7 @@ router.post('/chat', async (req, res) => {
     }
 
     // Get model configuration
-    const modelConfig = MODEL_CONFIGS[model] || MODEL_CONFIGS['gpt-4o-mini']; // Default to gpt-4o-mini
+    const modelConfig = MODEL_CONFIGS[model] || MODEL_CONFIGS['gpt-4o']; // Default to gpt-4o
     const temp = temperature !== undefined && temperature !== null ? temperature : 0.7;
 
     try {
