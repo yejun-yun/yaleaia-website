@@ -22,49 +22,49 @@ const MODEL_CONFIGS = {
     // OpenAI Models
     'gpt-4o': {
         provider: 'openai',
-        model: 'gpt-4o', // Most advanced, multimodal model
+        model: 'gpt-4o',
         maxTokens: 4096 
     },
     'o1': {
         provider: 'openai',
-        model: 'o1-preview', // Advanced reasoning model
+        model: 'o1-preview',
         maxTokens: 32768
     },
     'o3': {
         provider: 'openai',
-        model: 'o3', // Latest reasoning model
+        model: 'o3-2025-04-16',
         maxTokens: 200000
     },
     'o3-mini': {
         provider: 'openai',
-        model: 'o3-mini', // Compact reasoning model
+        model: 'o3-mini-2025-01-31',
         maxTokens: 200000
     },
     'o4-mini': {
         provider: 'openai',
-        model: 'o4-mini', // Latest compact model with multimodal capabilities
+        model: 'o4-mini-2025-04-16',
         maxTokens: 200000
     },
     'gpt-4.5': {
         provider: 'openai',
-        model: 'gpt-4.5', // Transitional model with enhanced capabilities
+        model: 'gpt-4.5-preview',
         maxTokens: 8192
     },
 
     // Anthropic Models
     'claude-3-opus': {
         provider: 'anthropic',
-        model: 'claude-3-opus-20240229', // Most powerful model for complex tasks
+        model: 'claude-3-opus-20240229',
         maxTokens: 4096
     },
     'claude-3.5-sonnet': {
         provider: 'anthropic',
-        model: 'claude-3.5-sonnet-20240620', // Best balance of intelligence and speed
+        model: 'claude-3.5-sonnet-20240620',
         maxTokens: 8192
     },
     'claude-4-sonnet': {
         provider: 'anthropic',
-        model: 'claude-4-sonnet-20250522', // Latest high-performance reasoning model
+        model: 'claude-4-sonnet-20250522',
         maxTokens: 64000
     }
 };

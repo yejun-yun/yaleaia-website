@@ -15,26 +15,6 @@
           <section className="fellowship-section">
             <div className="container">
               <div className="fellowship-content">
-                <h2>Weekly Paper Reading Group</h2>
-                <div className="fellowship-description">
-                  <p>
-                    YAIA members meet weekly to read and discuss selected papers on technical AI safety. This is a great way to stay up-to-date with current research and engage in thoughtful discussions with other interested students.
-                  </p>
-                  <div className="cta-links">
-                    <Link to="https://join.slack.com/t/yaleaialignment/shared_invite/zt-2tbqdofqr-AyCDedQdqxYtToi994IR6w" className="link-button primary" target="_blank" rel="noopener noreferrer">Join Our Slack for Updates</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '0' }}>
-            <div style={{ width: '70%', height: '3px', backgroundColor: '#e0e0e0' }}></div>
-          </div>
-
-          <section className="fellowship-section">
-            <div className="container">
-              <div className="fellowship-content">
                 <h2>Introductory Technical AI Safety Fellowship</h2>
                 <div className="fellowship-description">
                   <p>
@@ -51,7 +31,7 @@
                   </p>
                   <div className="cta-links">
                     <Link to="https://docs.google.com/document/d/10lIir6tAQUe51wpwwdt6ICdd7WtdAIlgkknOku79VDk/edit?usp=sharing" className="link-button secondary" target="_blank" rel="noopener noreferrer">View Curriculum</Link>
-                    <Link to="https://docs.google.com/forms/d/e/1FAIpQLSenO6RaXsRtg_cV8EyMOdBRiPUwWBePbyoXEd44yFgzReH8BQ/viewform?usp=header" className="link-button primary" target="_blank" rel="noopener noreferrer">Apply for Spring 2025</Link>
+                    <Link to="https://docs.google.com/forms/d/e/1FAIpQLScT6ig0l_TrJuYeR2ae4_9oCzWZXaeEdHCzF7WFqUi25HCiyw/viewform?usp=dialog" className="link-button primary" target="_blank" rel="noopener noreferrer">Apply for Fall '25</Link>
                   </div>
                 </div>
                 
@@ -86,6 +66,26 @@
                         If you've already familiar with all the material in the curriculum, please email us at yale.ai.alignment@gmail.com to discuss other ways of getting involved with YAIA! Also, consider joining our paper reading group!
                       </p>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '0' }}>
+            <div style={{ width: '70%', height: '3px', backgroundColor: '#e0e0e0' }}></div>
+          </div>
+
+          <section className="fellowship-section">
+            <div className="container">
+              <div className="fellowship-content">
+                <h2>Weekly Paper Reading Group</h2>
+                <div className="fellowship-description">
+                  <p>
+                    YAIA members meet weekly to read and discuss selected papers on technical AI safety. This is a great way to stay up-to-date with current research and engage in thoughtful discussions with other interested students.
+                  </p>
+                  <div className="cta-links">
+                    <Link to="https://join.slack.com/t/yaleaialignment/shared_invite/zt-2tbqdofqr-AyCDedQdqxYtToi994IR6w" className="link-button primary" target="_blank" rel="noopener noreferrer">Join Our Slack for Updates</Link>
                   </div>
                 </div>
               </div>
