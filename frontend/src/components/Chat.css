@@ -20,7 +20,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px 24px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary-dark-blue), var(--secondary-dark-blue));
     color: white;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     min-height: 80px;
@@ -212,8 +212,8 @@
 
 .search-input:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: var(--secondary-dark-blue);
+    box-shadow: 0 0 0 3px rgba(0, 53, 107, 0.15);
 }
 
 .clear-search-btn {
@@ -287,7 +287,7 @@
 }
 
 .message.user .message-bubble {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary-dark-blue), var(--secondary-dark-blue));
     color: white;
     border-bottom-right-radius: 6px;
 }
@@ -452,7 +452,7 @@
 .typing-dots span {
     width: 8px;
     height: 8px;
-    background: #667eea;
+    background: var(--primary-dark-blue);
     border-radius: 50%;
     animation: typing 1.4s infinite ease-in-out;
 }
@@ -515,8 +515,8 @@
 
 .message-input:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: var(--secondary-dark-blue);
+    box-shadow: 0 0 0 3px rgba(0, 53, 107, 0.15);
 }
 
 .message-input:disabled {
@@ -573,7 +573,7 @@
 
 .send-button {
     padding: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary-dark-blue), var(--secondary-dark-blue));
     color: white;
     border: none;
     border-radius: 8px;
@@ -588,7 +588,7 @@
 
 .send-button:hover:not(:disabled) {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 49, 83, 0.3);
 }
 
 .send-button:disabled {

@@ -4,7 +4,7 @@
     align-items: center;
     min-height: 60vh;
     padding: 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary-dark-blue), var(--secondary-dark-blue));
 }
 
 .auth-card {
@@ -54,11 +54,11 @@
 
 .form-group input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--secondary-dark-blue);
 }
 
 .auth-button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary-dark-blue), var(--secondary-dark-blue));
     color: white;
     border: none;
     padding: 14px 24px;
@@ -143,7 +143,7 @@
 .switch-button {
     background: none;
     border: none;
-    color: #667eea;
+    color: var(--primary-dark-blue);
     font-weight: 600;
     cursor: pointer;
     margin-left: 8px;
@@ -151,7 +151,7 @@
 }
 
 .switch-button:hover {
-    color: #764ba2;
+    color: var(--secondary-dark-blue);
 }
 
 .error-message {

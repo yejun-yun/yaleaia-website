@@ -1,5 +1,8 @@
 /* App.css */
 :root {
+  --primary-dark-blue: #003153;
+  --secondary-dark-blue: #00356B;
+  --tertiary-dark-blue: #004A8A;
   --primary-blue: #2351DC;     /* Rich, engaging blue */
   --secondary-blue: #163AA2;   /* Darker blue for depth */
   --accent-blue: #5B7FFF;      /* Bright blue for highlights */
