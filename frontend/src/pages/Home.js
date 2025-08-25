@@ -33,28 +33,27 @@ function Home() {
       </Helmet>
       
       <section className="hero">
-        <div className="hero-content">
-        <h1 style={{color: 'inherit'}}>Yale AI Alignment</h1>
-          <p className="hero-subtitle">Managing risks from advanced artificial intelligence is one of the most important problems of our time. We are a community at Yale aimed at reducing these risks and steering the trajectory of AI development for the better.</p>
-          <p className="hero-subtitle">We run a semester-long introductory technical intro fellowship on AI safety research, covering topics like neural network interpretability, learning from human feedback, goal misgeneralization in reinforcement learning agents, eliciting latent knowledge, and evaluating dangerous capabilities in models.</p>
-          <div className="hero-buttons">
-            <Link to="https://forms.gle/vmNG2pdZBcdwdU1X6" className="primary-button" target="_blank" rel="noopener noreferrer">YAIA Interest Form</Link>
-            <Link to="https://join.slack.com/t/yaleaialignment/shared_invite/zt-2tbqdofqr-AyCDedQdqxYtToi994IR6w" className="secondary-button" target="_blank" rel="noopener noreferrer">YAIA Community Slack</Link>
+        <div className="hero-inner">
+          <div className="hero-content">
+            <h1 style={{color: 'inherit'}}>Yale AI Alignment</h1>
+            <p className="hero-subtitle">Managing risks from advanced artificial intelligence is one of the most important problems of our time. We are a community at Yale aimed at reducing these risks and steering the trajectory of AI development for the better.</p>
+            <p className="hero-subtitle">We run a semester-long introductory technical intro fellowship on AI safety research, covering topics like neural network interpretability, learning from human feedback, goal misgeneralization in reinforcement learning agents, eliciting latent knowledge, and evaluating dangerous capabilities in models.</p>
+            <div className="hero-buttons">
+              <Link to="https://forms.gle/vmNG2pdZBcdwdU1X6" className="primary-button" target="_blank" rel="noopener noreferrer">YAIA Interest Form</Link>
+              <Link to="https://join.slack.com/t/yaleaialignment/shared_invite/zt-2tbqdofqr-AyCDedQdqxYtToi994IR6w" className="secondary-button" target="_blank" rel="noopener noreferrer">YAIA Community Slack</Link>
+            </div>
           </div>
+          {showPhoto && (
+            <div className="hero-image">
+              <img
+                src={`${process.env.PUBLIC_URL}/group-photo.jpg`}
+                alt="YAIA members at a meeting"
+                onError={() => setShowPhoto(false)}
+              />
+            </div>
+          )}
         </div>
       </section>
-      {showPhoto && (
-        <section className="community-photo-section">
-          <div className="container">
-            <img 
-              src={`${process.env.PUBLIC_URL}/group-photo.jpg`} 
-              alt="YAIA members at a meeting"
-              className="community-photo"
-              onError={() => setShowPhoto(false)}
-            />
-          </div>
-        </section>
-      )}
      
     </div>
   );

@@ -50,10 +50,18 @@ section {
   padding-bottom: 10rem;
 }
 
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .hero-content {
   max-width: 800px;
   margin: 0;
-  margin-left: 10%;
   text-align: left;
 }
 
@@ -82,6 +90,20 @@ section {
   margin-top: 2rem;
   padding: 0.5rem 0;
   filter: drop-shadow(0 4px 8px rgba(0, 49, 83, 0.2));
+}
+
+.hero-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image img {
+  width: 100%;
+  height: auto;
+  max-width: 520px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-standard-light);
 }
 
 .primary-button, 
@@ -254,6 +276,13 @@ section {
 @media (max-width: 768px) {
   .hero {
     padding: 4rem 1rem;
+  }
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .hero-image img {
+    max-width: 100%;
   }
   
   .container {
