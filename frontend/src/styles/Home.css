@@ -196,6 +196,21 @@ section {
   padding-top: 10rem;
 }
 
+/* Community Photo */
+.community-photo-section {
+  background: var(--background-light);
+  padding: 2rem 0 6rem 0;
+}
+
+.community-photo {
+  width: 100%;
+  max-width: 1100px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: var(--shadow-standard-light);
+}
+
 .features-staggered {
   display: flex;
   flex-direction: column;

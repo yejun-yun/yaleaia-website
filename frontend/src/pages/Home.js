@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useInView } from 'react-intersection-observer';
@@ -21,6 +21,7 @@ const FeatureCard = ({ icon, title, description }) => {
 
 
 function Home() {
+  const [showPhoto, setShowPhoto] = useState(true);
   return (
     <div className="home">
       <Helmet>
@@ -42,7 +43,18 @@ function Home() {
           </div>
         </div>
       </section>
-
+      {showPhoto && (
+        <section className="community-photo-section">
+          <div className="container">
+            <img 
+              src={`${process.env.PUBLIC_URL}/group-photo.jpg`} 
+              alt="YAIA members at a meeting"
+              className="community-photo"
+              onError={() => setShowPhoto(false)}
+            />
+          </div>
+        </section>
+      )}
      
     </div>
   );
