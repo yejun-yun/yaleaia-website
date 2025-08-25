@@ -1,33 +1,35 @@
 .notificationbar {
-    background-color: white;
-    padding: .5rem 6rem;
+    background-color: #00355b;
+    color: white;
+    padding: .5rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-standard-light);
+    font-size: 0.95rem;
+}
+
+.notificationbar-content {
+    width: 100%;
+    max-width: 1200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    margin-bottom: 1000px;
-    box-shadow: var(--shadow-standard-light); /* Added for better light mode visibility */
-    font-size: small;
-  }
-  
-  .navbar-logo a {
-    color: var(--primary-dark-blue);
-    font-size: 1.5rem;
-    font-weight: bold;
+    gap: 12px;
+}
+
+.notificationbar-link {
+    color: #00355b;
+    background: #ffffff;
+    padding: 6px 12px;
+    border-radius: 999px;
     text-decoration: none;
-  }
-  
-  .navbar-links a {
-    color: var(--text-primary-light);
-    text-decoration: none;
-    margin-right: 4rem;
-    margin-left: -2rem;
-    transition: color 0.3s ease;
-  }
-  
-  .navbar-links a:hover {
-    color: var(--secondary-dark-blue);
-  }
+    font-weight: 600;
+}
+
+.notificationbar-link:hover {
+    background: #e6eef5;
+}
