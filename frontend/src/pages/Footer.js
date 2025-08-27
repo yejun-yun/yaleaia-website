@@ -32,7 +32,6 @@ function Footer() {
           <h3>Connect</h3>
           <ul>
             <li><a href="https://forms.gle/vmNG2pdZBcdwdU1X6" target="_blank" rel="noopener noreferrer">Interest Form</a></li>
-            <li><a href="https://join.slack.com/t/yaleaialignment/shared_invite/zt-2tbqdofqr-AyCDedQdqxYtToi994IR6w" target="_blank" rel="noopener noreferrer">Slack</a></li>
           </ul>
         </div>
       </div>

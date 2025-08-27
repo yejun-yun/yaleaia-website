@@ -40,7 +40,6 @@ function Home() {
             <p className="hero-subtitle">We run a semester-long introductory technical intro fellowship on AI safety research, covering topics like neural network interpretability, learning from human feedback, goal misgeneralization in reinforcement learning agents, eliciting latent knowledge, and evaluating dangerous capabilities in models.</p>
             <div className="hero-buttons">
               <Link to="https://forms.gle/vmNG2pdZBcdwdU1X6" className="primary-button" target="_blank" rel="noopener noreferrer">YAIA Interest Form</Link>
-              <Link to="https://join.slack.com/t/yaleaialignment/shared_invite/zt-2tbqdofqr-AyCDedQdqxYtToi994IR6w" className="secondary-button" target="_blank" rel="noopener noreferrer">YAIA Community Slack</Link>
             </div>
           </div>
           {showPhoto && (

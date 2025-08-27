@@ -84,9 +84,6 @@
                   <p>
                     YAIA members meet weekly to read and discuss selected papers on technical AI safety. This is a great way to stay up-to-date with current research and engage in thoughtful discussions with other interested students.
                   </p>
-                  <div className="cta-links">
-                    <Link to="https://join.slack.com/t/yaleaialignment/shared_invite/zt-2tbqdofqr-AyCDedQdqxYtToi994IR6w" className="link-button primary" target="_blank" rel="noopener noreferrer">Join Our Slack for Updates</Link>
-                  </div>
                 </div>
               </div>
             </div>
