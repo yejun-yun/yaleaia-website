@@ -15,10 +15,10 @@
           <section className="fellowship-section">
             <div className="container">
               <div className="fellowship-content">
-                <h2>Introductory Technical AI Safety Fellowship</h2>
+                <h2>AI Safety Fellowship</h2>
                 <div className="fellowship-description">
                   <p>
-                    YAIA is offering an 8-week introductory reading group focused on AI safety, covering topics such as:
+                    YAIA is offering an 8-week AI Safety Fellowship focused on technical AI safety, covering topics such as:
                   </p>
                   <ul className="topics-list">
                     <li>Neural Network Interpretability</li>
@@ -31,7 +31,7 @@
                   </p>
                   <div className="cta-links">
                     <Link to="https://docs.google.com/document/d/10lIir6tAQUe51wpwwdt6ICdd7WtdAIlgkknOku79VDk/edit?usp=sharing" className="link-button secondary" target="_blank" rel="noopener noreferrer">View Curriculum</Link>
-                    <Link to="https://docs.google.com/forms/d/e/1FAIpQLScT6ig0l_TrJuYeR2ae4_9oCzWZXaeEdHCzF7WFqUi25HCiyw/viewform?usp=dialog" className="link-button primary" target="_blank" rel="noopener noreferrer">Apply for Fall '25</Link>
+                    <Link to="https://docs.google.com/forms/d/e/1FAIpQLSc5jqrujQSvH-N9sA7GN4bI1iBtV_YXxpnNxFuV4VYVlBT7nw/viewform?usp=sharing&ouid=109623917252404388178" className="link-button primary" target="_blank" rel="noopener noreferrer">Apply for Summer '26</Link>
                   </div>
                 </div>
                 
