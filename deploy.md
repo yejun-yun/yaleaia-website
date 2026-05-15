@@ -17,11 +17,14 @@
 
 ### Option 2: Render
 1. Go to [render.com](https://render.com)
-2. Create new Web Service
+2. Create new Web Service for the backend
 3. Connect GitHub repo
-4. Build command: `npm install`
-5. Start command: `npm run dev`
-6. Add same environment variables as above
+4. Set root directory to `backend`
+5. Build command: `npm install`
+6. Start command: `npm start`
+7. Add same environment variables as above
+
+Important: this repository does not have a root-level `package.json`. If Render builds from the repository root, it will fail with `ENOENT` while trying to open `/opt/render/project/src/package.json`.
 
 ## Frontend Deployment
 
@@ -39,6 +42,18 @@
    REACT_APP_API_URL=https://your-backend-url.com/api
    ```
 6. Deploy
+
+### Alternative: Render Static Site
+1. Go to [render.com](https://render.com)
+2. Create new Static Site
+3. Connect GitHub repository
+4. Set root directory to `frontend`
+5. Build command: `npm install && npm run build`
+6. Publish directory: `build`
+7. Add environment variable:
+   ```
+   REACT_APP_API_URL=https://your-backend-url.com/api
+   ```
 
 ### Alternative: Vercel
 1. Go to [vercel.com](https://vercel.com)
@@ -79,7 +94,7 @@ REACT_APP_API_URL=https://api.yaleaia.org
 
 ## Testing After Deployment
 
-1. Test backend: `curl https://api.yaleaia.org/test`
+1. Test backend: `curl https://api.yaleaia.org/health`
 2. Test frontend: Visit `https://yaleaia.org`
 3. Test chat: Navigate to `/chat` and try logging in
 
