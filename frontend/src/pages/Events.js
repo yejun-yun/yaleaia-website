@@ -154,7 +154,7 @@ function Events() {
             <div className="past-event-card">
               <h3>AI Alignment Bootcamp</h3>
               <p>March 2024</p>
-              <a href="#" className="view-resources">View Resources →</a>
+              <button type="button" className="view-resources">View Resources →</button>
             </div>
             {/* Add more past events */}
           </div>

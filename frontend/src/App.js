@@ -5,8 +5,6 @@ import Navbar from './pages/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
 import Involve from './pages/Involve';
-import Events from './pages/Events';
-import Contact from './pages/Contact';
 import ChatPage from './pages/ChatPage';
 import Footer from './pages/Footer';
 import Notificationbar from './pages/Notificationbar';

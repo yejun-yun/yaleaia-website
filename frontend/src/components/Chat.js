@@ -15,13 +15,13 @@ const Chat = ({ onLogout }) => {
     const [selectedModel, setSelectedModel] = useState('claude-3.5-sonnet');
     const [temperature, setTemperature] = useState(0.7);
     const [searchQuery, setSearchQuery] = useState('');
-    const [showSearch, setShowSearch] = useState(false);
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [abortController, setAbortController] = useState(null);
     const { currentUser, logout, idToken, refreshIdToken } = useAuth();
     const messagesEndRef = useRef(null);
     const inputRef = useRef(null);
     const fileInputRef = useRef(null);
+    const showSearch = true;
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
