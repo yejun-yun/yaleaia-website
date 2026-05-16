@@ -39,7 +39,6 @@ function Navbar() {
           <Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
           <Link to="/about" onClick={() => setIsMenuOpen(false)}>About</Link>
           <Link to="/involve" onClick={() => setIsMenuOpen(false)}>Get Involved</Link>
-          <Link to="/chat" onClick={() => setIsMenuOpen(false)}>LLMs</Link>
         </div>
       </nav>
     </div>
