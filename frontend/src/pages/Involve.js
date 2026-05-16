@@ -27,7 +27,7 @@
                     <li>Eliciting Latent Knowledge</li>
                   </ul>
                   <p>
-                    The fellowship convenes weekly in small groups, providing dinner and requiring no additional work outside of meetings.
+                    The summer fellowship convenes weekly in small groups online and requires no additional work outside of meetings.
                   </p>
                   <div className="cta-links">
                     <Link to="https://docs.google.com/document/d/10lIir6tAQUe51wpwwdt6ICdd7WtdAIlgkknOku79VDk/edit?usp=sharing" className="link-button secondary" target="_blank" rel="noopener noreferrer">View Curriculum</Link>
@@ -56,7 +56,7 @@
                     <div className={`faq-item ${activeFaq === 2 ? 'active' : ''}`} onClick={() => toggleFaq(2)}>
                       <h4>When and where will the fellowship meetings take place?</h4>
                       <p>
-                      We ask for your availability in the application, and will attempt to accommodate people's schedules when forming cohorts. Each cohort meets once a week for two hours, with dinner or lunch provided. Meeting locations will be announced in the Slack channel several days prior to each meeting.
+                      We ask for your availability in the application, and will attempt to accommodate people's schedules when forming cohorts. The summer fellowship meets once a week for two hours online, while fellowships during the academic year meet in person. Meeting details will be announced in the Slack channel several days prior to each meeting.
                       </p>
                     </div>
     
