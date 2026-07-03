@@ -29,9 +29,11 @@
                   <p>
                     The summer fellowship convenes weekly in small groups online and requires no additional work outside of meetings.
                   </p>
+                  <p>
+                    <strong>Applications for the Summer '26 fellowship are now closed.</strong>
+                  </p>
                   <div className="cta-links">
-                    <Link to="https://docs.google.com/document/d/10lIir6tAQUe51wpwwdt6ICdd7WtdAIlgkknOku79VDk/edit?usp=sharing" className="link-button secondary" target="_blank" rel="noopener noreferrer">View Curriculum</Link>
-                    <Link to="https://docs.google.com/forms/d/e/1FAIpQLSc5jqrujQSvH-N9sA7GN4bI1iBtV_YXxpnNxFuV4VYVlBT7nw/viewform?usp=sharing&ouid=109623917252404388178" className="link-button primary" target="_blank" rel="noopener noreferrer">Apply for Summer '26</Link>
+                    <Link to="https://docs.google.com/document/d/1idLhTPZv8NAyJjcbqqUBRECm_NR3yVkHVZRXRo1A9kQ/edit?usp=sharing" className="link-button secondary" target="_blank" rel="noopener noreferrer">View Curriculum</Link>
                   </div>
                 </div>
                 

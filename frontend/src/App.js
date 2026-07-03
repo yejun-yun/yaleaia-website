@@ -5,7 +5,6 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Involve from './pages/Involve';
 import Footer from './pages/Footer';
-import Notificationbar from './pages/Notificationbar';
 import './styles/App.css';
 
 function App() {
@@ -13,7 +12,6 @@ function App() {
     <Router>
       <div className="App">
         <div style={{ position: 'sticky', top: 0, zIndex: 100 }}>
-          <Notificationbar />
           <Navbar />
         </div>
         <Routes>
