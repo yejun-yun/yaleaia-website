@@ -1,115 +1,41 @@
 # Deployment Guide for yaleaia.org
 
-## Backend Deployment
+The site is fully static — deploying means building `frontend/` and
+serving the `build/` directory. No environment variables, no API keys,
+no backend.
 
-### Option 1: Railway (Recommended)
-1. Go to [railway.app](https://railway.app)
-2. Sign up with GitHub
-3. Create new project → Deploy from GitHub
-4. Select your repository
-5. Set environment variables:
-   ```
-   OPENAI_API_KEY=your_openai_key_here
-   ANTHROPIC_API_KEY=your_anthropic_key_here
-   FIREBASE_SERVICE_ACCOUNT_KEY_JSON={"type":"service_account","project_id":"your-project-id",...}
-   ```
-6. Deploy and get your URL (e.g., `https://your-app.railway.app`)
+## Cloudflare Pages (recommended)
 
-### Option 2: Render
-1. Go to [render.com](https://render.com)
-2. Create new Web Service for the backend
-3. Connect GitHub repo
-4. Set root directory to `backend`
-5. Build command: `npm install`
-6. Start command: `npm start`
-7. Add same environment variables as above
-
-Important: this repository does not have a root-level `package.json`. If Render builds from the repository root, it will fail with `ENOENT` while trying to open `/opt/render/project/src/package.json`.
-
-## Frontend Deployment
-
-### Cloudflare Pages (Recommended for your domain)
 1. Go to [dash.cloudflare.com](https://dash.cloudflare.com)
-2. Pages → Create a project
-3. Connect GitHub repository
-4. Build settings:
+2. Pages → Create a project → connect the GitHub repository
+3. Build settings:
    - Framework preset: `Create React App`
    - Root directory: `frontend`
    - Build command: `npm run build`
    - Build output directory: `build`
-5. Environment variables:
-   ```
-   REACT_APP_API_URL=https://your-backend-url.com/api
-   ```
-6. Deploy
+4. Deploy
 
-### Alternative: Render Static Site
-1. Go to [render.com](https://render.com)
-2. Create new Static Site
-3. Connect GitHub repository
-4. Set root directory to `frontend`
-5. Build command: `npm install && npm run build`
-6. Publish directory: `build`
-7. Add environment variable:
-   ```
-   REACT_APP_API_URL=https://your-backend-url.com/api
-   ```
+## Alternatives
 
-### Alternative: Vercel
-1. Go to [vercel.com](https://vercel.com)
-2. Import GitHub repository
-3. Set root directory to `frontend`
-4. Add environment variable:
-   ```
-   REACT_APP_API_URL=https://your-backend-url.com/api
-   ```
+Any static host works the same way (Render Static Site, Vercel, GitHub
+Pages, Netlify): root directory `frontend`, build command
+`npm run build`, publish directory `build`.
 
-## Domain Configuration
+## Domain
 
-### Frontend (yaleaia.org)
-1. In Cloudflare DNS:
-   - Type: `CNAME`
-   - Name: `@` (or leave empty)
-   - Target: `your-cloudflare-pages-url.pages.dev`
+In Cloudflare DNS, point the apex at the host:
 
-### Backend (api.yaleaia.org)
-1. In Cloudflare DNS:
-   - Type: `CNAME`
-   - Name: `api`
-   - Target: `your-backend-url.com`
+- Type: `CNAME`
+- Name: `@`
+- Target: your Pages URL (e.g. `your-project.pages.dev`)
 
-## Environment Variables Checklist
+`frontend/public/CNAME` (containing `yaleaia.org`) is included in the
+build for hosts that use it, such as GitHub Pages.
 
-### Backend (.env)
-```
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
-FIREBASE_SERVICE_ACCOUNT_KEY_JSON={"type":"service_account",...}
-```
+## After deploying
 
-### Frontend (.env.local)
-```
-REACT_APP_API_URL=https://api.yaleaia.org
-```
-
-## Testing After Deployment
-
-1. Test backend: `curl https://api.yaleaia.org/health`
-2. Test frontend: Visit `https://yaleaia.org`
-3. Test chat: Navigate to `/chat` and try logging in
-
-## Troubleshooting
-
-### Common Issues:
-- **CORS errors**: Make sure backend allows requests from your frontend domain
-- **Authentication errors**: Verify Firebase configuration
-- **API not found**: Check that REACT_APP_API_URL is correct
-- **Build failures**: Ensure all dependencies are in package.json
-
-### Backend CORS Configuration
-Make sure your backend allows requests from your domain:
-```javascript
-app.use(cors({
-  origin: ['https://yaleaia.org', 'http://localhost:3000']
-}));
-``` 
+1. Visit `https://yaleaia.org` and click through `/`, `/#/involve`,
+   `/#/curriculum` (the app uses hash routing, so deep links work on any
+   static host without rewrite rules)
+2. Confirm `/curriculum` renders — it fetches `curriculum.md` from the
+   site root at runtime
