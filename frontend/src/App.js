@@ -1,27 +1,40 @@
-import React from 'react';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './pages/Navbar';
-import Home from './pages/Home';
-import About from './pages/About';
+import Home, { INTEREST_FORM_URL } from './pages/Home';
 import Involve from './pages/Involve';
+import Curriculum from './pages/Curriculum';
 import Footer from './pages/Footer';
+import { ThemeProvider } from './ThemeContext';
 import './styles/App.css';
+
+// Stable /apply address (also handled at the edge via public/_redirects
+// and pre-React via an inline script in index.html); this covers #/apply.
+function ApplyRedirect() {
+  useEffect(() => {
+    window.location.replace(INTEREST_FORM_URL);
+  }, []);
+  return null;
+}
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <div style={{ position: 'sticky', top: 0, zIndex: 100 }}>
+    <ThemeProvider>
+      <Router>
+        <div className="App">
           <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/involve" element={<Involve />} />
+            <Route path="/curriculum" element={<Curriculum />} />
+            <Route path="/apply" element={<ApplyRedirect />} />
+            {/* stale links (e.g. the old /about) land on the homepage */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+          <Footer />
         </div>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/involve" element={<Involve />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+      </Router>
+    </ThemeProvider>
   );
 }
 

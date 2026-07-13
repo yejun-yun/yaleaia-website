@@ -1,29 +1,86 @@
 /* App.css */
 :root {
+  /* Redesign tokens (YAIA Website Revamp) */
+  --paper: #FAFAFA;
+  --paper-rgb: 250, 250, 250;
+  --ink: #17181A;
+  --ink-rgb: 23, 24, 26;
+  --muted: #545756;
+  --faint: #8A8D8B;
+  --hairline: #E7E8E6;
+  --hairline-dark: #E2E3E1;
+  --yale-blue: #00356B;
+  --nav-height: 88px;
+
+  /* Legacy palette (still used by About/Involve/Events/etc.) */
   --primary-dark-blue: #003153;
   --secondary-dark-blue: #00356B;
   --tertiary-dark-blue: #004A8A;
-  --primary-blue: #2351DC;     /* Rich, engaging blue */
-  --secondary-blue: #163AA2;   /* Darker blue for depth */
-  --accent-blue: #5B7FFF;      /* Bright blue for highlights */
-  --light-blue: #F0F5FF;       /* Very light blue for backgrounds */
+  --primary-blue: #2351DC;
+  --secondary-blue: #163AA2;
+  --accent-blue: #5B7FFF;
+  --light-blue: #F0F5FF;
   --white: #FFFFFF;
   --off-white: #F8FAFC;
+  --dark-gray: #1c1c1c;
+  --medium-gray: #2e2e2e;
+  --light-gray: #a6a6a6;
   --gray-100: #F1F5F9;
   --gray-200: #E2E8F0;
   --gray-300: #CBD5E1;
   --gray-800: #1E293B;
   --gray-900: #0F172A;
-  --success-green: #10B981;
-  --warning-yellow: #F59E0B;
+  --text-primary-light: #1a1a1a;
+  --text-secondary-light: #666666;
+  --text-primary-dark: #e0e0e0;
+  --text-secondary-dark: #b0b0b0;
+  --background-light: #f8f9fa;
+  --background-dark: #121212;
+  --card-background-light: #ffffff;
+  --card-background-dark: #1e1e1e;
+  --transition-standard: 0.3s ease;
+  --border-radius-standard: 12px;
+  --shadow-standard-light: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-standard-dark: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* No orphaned words: headings balance their lines, running text avoids
+   single-word last lines (both no-ops in browsers without support) */
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p, li, blockquote, figcaption, dd, dt {
+  text-wrap: pretty;
+}
+
+/* Nightfall — the dark theme. A deep blue-black ground rather than a
+   neutral grey: the same page lit differently, with Yale blue brightened
+   to stay legible as the accent. --hairline-dark stays the *more visible*
+   of the two rules, which on this ground means the lighter one. */
+:root[data-theme='dark'] {
+  --paper: #08101C;
+  --paper-rgb: 8, 16, 28;
+  --ink: #F2F5F9;
+  --ink-rgb: 242, 245, 249;
+  --muted: #A7B4C6;
+  --faint: #6E7E92;
+  --hairline: #172335;
+  --hairline-dark: #202F46;
+  --yale-blue: #8FBCEE;
 }
 
 .App {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: var(--gray-800);
-  background-color: var(--off-white);
+  font-family: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink);
+  background-color: var(--paper);
 }
 
-.App p {
-  font-size: larger;
+.App a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.App a:hover {
+  color: var(--yale-blue);
 }

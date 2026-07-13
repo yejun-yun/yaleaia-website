@@ -1,24 +1,24 @@
 /* index.css */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #f8f9fa;
-  color: #333;
+  background: var(--paper, #FAFAFA);
+  color: var(--ink, #17181A);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Dark mode global styles */
-body.dark-mode {
-  background: #1a1a1a;
-  color: #e1e1e1;
-}
-
-body.dark-mode * {
-  scrollbar-color: #4a5568 #2d3748;
+:root[data-theme='dark'] * {
+  scrollbar-color: #263650 #0d1626;
 }
 
 /* Custom scrollbar for webkit browsers */
@@ -39,16 +39,16 @@ body.dark-mode * {
   background: #a8a8a8;
 }
 
-body.dark-mode ::-webkit-scrollbar-track {
-  background: #2d3748;
+:root[data-theme='dark'] ::-webkit-scrollbar-track {
+  background: #0d1626;
 }
 
-body.dark-mode ::-webkit-scrollbar-thumb {
-  background: #4a5568;
+:root[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: #263650;
 }
 
-body.dark-mode ::-webkit-scrollbar-thumb:hover {
-  background: #718096;
+:root[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background: #35486a;
 }
 
 /* Code block styling */
@@ -61,8 +61,8 @@ code {
 }
 
 /* Focus styles for accessibility */
-*:focus {
-  outline: 2px solid #667eea;
+*:focus-visible {
+  outline: 2px solid var(--yale-blue, #00356B);
   outline-offset: 2px;
 }
 
@@ -73,11 +73,11 @@ button, input, textarea, select {
 
 /* Selection color */
 ::selection {
-  background: rgba(102, 126, 234, 0.3);
+  background: rgba(0, 53, 107, 0.18);
 }
 
-body.dark-mode ::selection {
-  background: rgba(102, 126, 234, 0.5);
+:root[data-theme='dark'] ::selection {
+  background: rgba(143, 188, 238, 0.3);
 }
 
 

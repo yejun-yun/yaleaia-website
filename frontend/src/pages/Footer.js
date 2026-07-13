@@ -1,42 +1,45 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Footer.css';
-import logo from '../assets/logo512.png';
+import Lettermark from '../components/Lettermark';
+import { INTEREST_FORM_URL } from './Home';
 
 function Footer() {
   return (
     <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-section">
-          <img 
-            src={logo} 
-            alt="YAIA Logo" 
-            className="footer-logo"
-            style={{
-              height: "180px",
-              width: "auto",
-              maxWidth: "100%"
-            }}
-          />
-          <p>Shaping the future of AI safety</p>
+      <div className="footer-main">
+        <div className="footer-brand">
+          <Lettermark className="footer-logo" />
+          <div className="footer-location">New Haven, CT</div>
         </div>
-        <div className="footer-section">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/involve">Get Involved</Link></li>
-          </ul>
-        </div>
-        <div className="footer-section">
-          <h3>Connect</h3>
-          <ul>
-            <li><a href="https://forms.gle/vmNG2pdZBcdwdU1X6" target="_blank" rel="noopener noreferrer">Interest Form</a></li>
-          </ul>
+        <div className="footer-columns">
+          <div className="footer-column">
+            <Link to="/">About</Link>
+            <Link to="/involve">Programs</Link>
+            <a
+              className="footer-cta"
+              href={INTEREST_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Interest form
+            </a>
+          </div>
+          <div className="footer-column faint">
+            <span>© 2026 Yale AI Alignment</span>
+            <a href="mailto:yale.ai.alignment@gmail.com">Contact us</a>
+          </div>
         </div>
       </div>
-      <div className="footer-bottom">
-        <p> This website is published by Yale College students and Yale University is not responsible for its contents. The activities on this website are not supervised or endorsed by Yale and information contained on this website does not necessarily reflect the opinions or official positions of the University. All rights are reserved to Yale University for the Yale name and trademark. </p>
+      <div className="footer-disclaimer">
+        <p>
+          This website is published by Yale College students and Yale
+          University is not responsible for its contents. The activities on
+          this website are not supervised or endorsed by Yale and information
+          contained on this website does not necessarily reflect the opinions
+          or official positions of the University. All rights are reserved to
+          Yale University for the Yale name and trademark.
+        </p>
       </div>
     </footer>
   );

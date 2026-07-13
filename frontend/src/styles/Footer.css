@@ -1,111 +1,85 @@
-/* Footer.css */
+/* Footer.css — redesign ported from YAIA Website Revamp demo */
+
 .footer {
-  background-color: var(--background-light);
-  color: var(--text-primary-light);
-  padding: 4rem 2rem 2rem;
-  position: relative;
+  background: var(--paper);
+  border-top: 1px solid var(--hairline-dark);
+  padding: 56px 3.5vw 40px;
 }
 
-.footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--light-gray) 20%,
-    var(--light-gray) 80%,
-    transparent
-  );
-}
-
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-}
-
-.footer-section h3 {
-  margin-bottom: 1.5rem;
-  color: var(--primary-dark-blue);
-  font-weight: 600;
-}
-
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-section ul li {
-  margin-bottom: 0.8rem;
-}
-
-.footer-section a {
-  color: var(--text-secondary-light);
-  text-decoration: none;
-  transition: var(--transition-standard);
-}
-
-.footer-section a:hover {
-  color: var(--primary-dark-blue);
-  opacity: 1;
-  transform: translateX(5px);
-}
-
-.footer-bottom {
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-  padding-top: 2rem;
-  margin-top: 2rem;
-  border-top: 1px solid var(--light-gray);
-  color: var(--text-secondary-light);
-}
-
-.footer-bottom a {
-  color: var(--primary-dark-blue);
-  text-decoration: none;
-  transition: var(--transition-standard);
-}
-
-.footer-bottom a:hover {
-  color: var(--primary-accent);
-}
-
-.social-links {
+.footer-main {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 1rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
-.social-links a {
-  color: var(--text-secondary-light);
-  font-size: 1.5rem;
-  transition: var(--transition-standard);
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.social-links a:hover {
-  color: var(--primary-dark-blue);
-  transform: translateY(-3px);
+/* Inline SVG in currentColor: follows --ink through theme changes, no
+   invert filter needed */
+.footer-logo {
+  height: 24px;
+  aspect-ratio: 1062.35 / 313.93;
+  display: block;
+  align-self: flex-start;
+  color: var(--ink);
 }
 
-@media (max-width: 768px) {
-  .footer-content {
-      grid-template-columns: 1fr;
-      text-align: center;
-  }
+.footer-location {
+  font-family: 'Geist', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--faint);
+}
 
-  .footer-section a:hover {
-      transform: none;
-  }
+.footer-columns {
+  display: flex;
+  gap: 56px;
+}
 
-  .social-links {
-      justify-content: center;
-  }
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+}
+
+.footer-column a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.footer-column a:hover {
+  color: var(--yale-blue);
+}
+
+.footer-column a.footer-cta {
+  color: var(--yale-blue);
+}
+
+.footer-column.faint,
+.footer-column.faint a {
+  color: var(--faint);
+}
+
+.footer-disclaimer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
+}
+
+.footer-disclaimer p {
+  margin: 0;
+  font-family: 'Geist', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--faint);
+  max-width: 860px;
 }

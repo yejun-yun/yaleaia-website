@@ -1,54 +1,190 @@
-.navbar-container {
-  background-color: var(--white);
-  padding: 1rem 2rem;
+/* Navbar.css — redesign ported from YAIA Website Revamp demo */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--nav-height);
+  pointer-events: none;
+  /* flex so the inner's margin-top can't collapse through the nav's top
+     edge (which pinned the pill to the viewport roof) */
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: fit-content;
-  z-index: 1000;
+  /* one curve for everything that moves during the collapse, tuned to sit
+     close to the lottie's ~0.65s so nothing appears to bounce */
+  --pill-dur: 0.6s;
+  --pill-ease: cubic-bezier(0.37, 0.16, 0.3, 1);
+}
+
+.navbar-inner {
+  pointer-events: auto;
   position: relative;
-}
-
-.notificationbar {
-  background-color: var(--secondary-dark-blue);
-  padding: 0.75rem 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--white);
-}
-
-.navbar {
-  background-color: var(--white);
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: var(--nav-height);
   width: 100%;
-  position: relative;
+  max-width: 100vw;
+  padding: 28px 3.5vw;
+  background: var(--paper);
+  border-radius: 0;
+  transition:
+    max-width var(--pill-dur) var(--pill-ease),
+    height var(--pill-dur) var(--pill-ease),
+    margin var(--pill-dur) var(--pill-ease),
+    padding var(--pill-dur) var(--pill-ease),
+    background-color var(--pill-dur) var(--pill-ease),
+    border-radius var(--pill-dur) var(--pill-ease);
 }
 
-.navbar-logo a {
-  color: var(--primary-dark-blue);
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
+/* Frosted pill surface. It lives on a pseudo-element because
+   backdrop-filter makes an element the containing block for fixed
+   descendants, which would break the fullscreen mobile menu inside. */
+.navbar-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgba(var(--paper-rgb), 0.5);
+  border: 1px solid rgba(var(--ink-rgb), 0.08);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  opacity: 0;
+  transition: opacity var(--pill-dur) var(--pill-ease);
+}
+
+.navbar.is-pill .navbar-inner {
+  max-width: 950px;
+  height: 56px;
+  margin-top: 18px;
+  padding: 0 32px;
+  background: rgba(var(--paper-rgb), 0);
+  border-radius: 999px;
+}
+
+.navbar.is-pill .navbar-inner::before {
+  opacity: 1;
+}
+
+.navbar-logo {
+  display: block;
+  line-height: 0;
+}
+
+/* Lottie box for the wordmark → lettermark morph; the comp is 1605 × 120.
+   In pill mode the box narrows to the lettermark and, thanks to the
+   slice fitting, crops rather than scales; the crop waits briefly so the
+   traveling letters have mostly gathered before the right edge closes. */
+.logo-morph {
+  height: 32px;
+  width: 428px;
+  max-width: 100%;
+  transition: width 0.5s var(--pill-ease);
+}
+
+.navbar.is-pill .logo-morph {
+  width: 110px;
+  transition: width 0.5s var(--pill-ease) 0.1s;
+}
+
+.logo-morph svg {
+  display: block;
+}
+
+/* The wordmark lottie renders pure-black vector fills; on Nightfall,
+   invert it to near-paper rather than restyling the comp's paths. */
+:root[data-theme='dark'] .logo-morph {
+  filter: invert(0.95);
+}
+
+/* Below 900px the wordmark scales with the viewport (comp ratio 1605:120
+   ≈ 13.375, lettermark crop ≈ 3.42 × height) so the expanded header
+   always leaves room for the hamburger, even on narrow phones */
+@media screen and (max-width: 900px) {
+  .logo-morph {
+    height: clamp(14px, 5.2vw, 24px);
+    width: calc(clamp(14px, 5.2vw, 24px) * 13.375);
+  }
+
+  .navbar.is-pill .logo-morph {
+    width: calc(clamp(14px, 5.2vw, 24px) * 3.42);
+  }
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  transition: gap var(--pill-dur) var(--pill-ease);
+}
+
+.navbar.is-pill .navbar-right {
+  gap: 26px;
 }
 
 .navbar-links {
   display: flex;
   align-items: center;
+  gap: 44px;
+  font-family: 'Geist', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  transition: gap var(--pill-dur) var(--pill-ease);
+}
+
+.navbar.is-pill .navbar-links {
+  gap: 30px;
 }
 
 .navbar-links a {
-  color: var(--text-primary-light);
+  color: var(--ink);
   text-decoration: none;
-  margin-right: 4rem;
-  margin-left: -2rem;
-  transition: color 0.3s ease;
+  transition: color 0.2s ease;
 }
 
 .navbar-links a:hover {
-  color: var(--secondary-dark-blue);
+  color: var(--yale-blue);
+}
+
+.navbar-links a.navbar-cta {
+  color: var(--yale-blue);
+  white-space: nowrap;
+}
+
+/* Theme switch — a hairline pill track whose knob slides to the dark side */
+.theme-switch {
+  flex: none;
+  position: relative;
+  width: 36px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--hairline-dark);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.theme-switch:hover {
+  border-color: var(--faint);
+}
+
+.theme-switch-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.theme-switch[aria-checked='true'] .theme-switch-knob {
+  transform: translateX(16px);
+  background: var(--yale-blue);
 }
 
 .menu-toggle {
@@ -62,9 +198,9 @@
 
 .hamburger {
   display: block;
-  width: 25px;
-  height: 3px;
-  background: var(--primary-dark-blue);
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
   position: relative;
   transition: all 0.3s ease-in-out;
 }
@@ -73,45 +209,60 @@
 .hamburger::after {
   content: '';
   position: absolute;
-  width: 25px;
-  height: 3px;
-  background: var(--primary-dark-blue);
+  left: 0;
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
   transition: all 0.3s ease-in-out;
 }
 
 .hamburger::before {
-  transform: translateY(-8px);
+  transform: translateY(-7px);
 }
 
 .hamburger::after {
-  transform: translateY(8px);
+  transform: translateY(7px);
 }
 
 @media screen and (max-width: 768px) {
   .menu-toggle {
-    display: block !important;
+    display: block;
+  }
+
+  .navbar.is-pill .navbar-inner {
+    max-width: 200px;
+    padding: 0 18px 0 22px;
+  }
+
+  /* On mobile the theme switch lives only in the fullscreen menu overlay,
+     centered under the links — never in the header bar or pill */
+  .navbar-links .theme-switch {
+    align-self: center;
+    margin-top: 2rem;
+  }
+
+  .navbar-right,
+  .navbar.is-pill .navbar-right {
+    gap: 18px;
   }
 
   .navbar-links {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--white);
+    background: var(--paper);
     flex-direction: column;
-    padding: 5rem 0;
-    box-shadow: var(--shadow-standard-light);
-    z-index: 1000;
     justify-content: center;
+    gap: 0;
+    z-index: 1000;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
   .navbar-links.active {
-    display: flex;
     opacity: 1;
     visibility: visible;
   }
@@ -120,7 +271,8 @@
     margin: 1rem 0;
     padding: 0.5rem 2rem;
     width: 100%;
+    box-sizing: border-box;
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
   }
 }

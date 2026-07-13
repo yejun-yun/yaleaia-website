@@ -1,205 +1,467 @@
-/* Fellowship Section Styling */
-.fellowship-section {
-  background-color: var(--white);
-  padding: 10rem 0;
+/* Involve.css — Programs page as an editorial spread, mirroring the
+   homepage mission section's architecture */
+
+.involve {
+  background: var(--paper);
+}
+
+.involve-eyebrow {
+  font-family: 'Geist', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--yale-blue);
+}
+
+/* Half-hero — interactive contour field with the title over it */
+
+.involve-hero {
   position: relative;
-}
-
-.fellowship-content {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 2.5rem;
-}
-
-.fellowship-description {
-  margin: 3rem 0;
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.topics-list {
-  margin: 2.5rem 0;
-  padding-left: 3rem;
-  list-style: none;
-}
-
-.topics-list li {
-  margin-bottom: 1rem;
-  color: var(--text-primary-light);
-  font-size: 1.2rem;
-  line-height: 1.6;
-  position: relative;
-}
-
-.topics-list li::before {
-  content: "•";
-  color: var(--primary-dark-blue);
-  font-weight: bold;
-  position: absolute;
-  left: -1.5rem;
-}
-
-.cta-links {
-  display: flex;
-  gap: 2rem;
-  margin-top: 3rem;
-  filter: drop-shadow(0 2px 4px rgba(0, 49, 83, 0.1));
-}
-
-.link-button {
-  padding: clamp(0.6rem, 1.5vw, 1.2rem) clamp(1rem, 2vw, 2.5rem);
-  border-radius: var(--border-radius-standard);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: clamp(0.7rem, 1.2vw, 0.9rem);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  position: relative;
+  height: 380px;
   overflow: hidden;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: clamp(100px, 25vw, 160px);
-  white-space: nowrap;
+  background: var(--paper);
 }
 
-.link-button::before {
-  content: '';
+.contour-canvas {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 120%;
-  height: 0;
-  transform: translate(-50%, -50%) rotate(45deg);
-  background: rgba(255, 255, 255, 0.1);
-  transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.link-button:hover::before {
-  height: 500%;
-}
-
-.link-button.primary {
-  background: linear-gradient(135deg, var(--primary-dark-blue), var(--secondary-dark-blue));
-  color: var(--white);
-  border: none;
-  box-shadow: 0 2px 8px rgba(0, 49, 83, 0.15);
-}
-
-.link-button.secondary {
-  background-color: var(--off-white);
-  color: var(--text-primary-light);
-  border: 2px solid var(--primary-dark-blue);
-  box-shadow: 0 2px 8px rgba(0, 49, 83, 0.05);
-}
-
-.link-button:hover {
-  box-shadow: 0 2px 12px rgba(0, 49, 83, 0.2);
-}
-
-/* FAQ Section Styling */
-.faq-section {
-  margin-top: 8rem;
+  inset: 0;
   width: 100%;
+  height: 100%;
+  display: block;
 }
 
-.faq-section h3 {
-  margin-bottom: 4rem;
-  color: var(--text-primary-light);
-  font-size: 2.2rem;
+.involve-hero-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--paper) 4%,
+    rgba(var(--paper-rgb), 0.6) 30%,
+    rgba(var(--paper-rgb), 0) 70%
+  );
+  pointer-events: none;
+}
+
+.involve-hero-copy {
+  position: absolute;
+  left: 3.5vw;
+  bottom: 34px;
+}
+
+.involve-hero-copy h1 {
+  margin: 14px 0 0;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 500;
+  font-size: clamp(34px, 4vw, 52px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* Program pathway — woven diagram (desktop) / station grid (mobile) */
+
+.program-pathway {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 3.5vw 48px;
+}
+
+.pathway-weave {
+  position: relative;
+}
+
+.pathway-weave canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.pw-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
   text-align: center;
 }
 
-.faq-grid {
-  display: block;
-  gap: 2.5rem;
-  max-width: 1200px;
+.pw-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ink);
   margin: 0 auto;
 }
 
-.faq-item {
-  padding: 1.5rem 2rem;
-  cursor: pointer;
-  margin-bottom: 0;
-  transition: all 0.3s ease;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin-top: -1px;
+.pw-node.main .pw-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--yale-blue);
 }
 
-.faq-item:hover {
-  background-color: rgba(0, 0, 0, 0.02);
+.pw-label {
+  margin-top: 8px;
+  font-family: 'Geist', sans-serif;
+  font-size: 12.5px;
+  color: var(--muted);
+  white-space: nowrap;
 }
 
-.faq-item h4 {
-  color: var(--primary-dark-blue);
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
-  position: relative;
+.pw-node.main .pw-label {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 500;
+  font-size: 14.5px;
+  color: var(--ink);
+}
+
+/* Station grid: the pathway's mobile fallback */
+
+.pathway-stations {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 24px;
+  border-top: 1px solid var(--hairline-dark);
+  padding-top: 28px;
+}
+
+.pathway-station ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pathway-station li {
+  font-family: 'Geist', sans-serif;
+  font-weight: 300;
+  font-size: 13.5px;
+  color: var(--muted);
+  padding: 3px 0;
+}
+
+.pathway-station.main li {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+/* Fellowship spread — sticky facts column left, week rows right */
+
+.fellowship {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 3.5vw 88px;
+}
+
+/* The Programs page separates sections with the dying-wave rule rather
+   than hairlines; the waves bring their own air, so no extra padding */
+.involve .wave-rule {
+  padding: 24px 0;
+}
+
+.fellowship-left {
+  position: sticky;
+  top: calc(var(--nav-height) + 40px);
+  align-self: start;
+  padding-right: clamp(28px, 4vw, 64px);
+}
+
+.fellowship-left h2 {
+  margin: 20px 0 0;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 500;
+  font-size: clamp(22px, 2.2vw, 28px);
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+/* Inline lettermark sized to the cap height of the title beside it */
+.fellowship-logo {
+  height: 0.72em;
+  aspect-ratio: 1062.35 / 313.93;
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 0.07em;
+  transform: translateY(0.02em);
+}
+
+.fellowship-left > p {
+  margin: 20px 0 0;
+  font-family: 'Geist', sans-serif;
+  font-weight: 300;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+.fellowship-facts {
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--hairline-dark);
+  font-family: 'Geist', sans-serif;
+}
+
+.fellowship-facts li {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  gap: 18px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 13.5px;
 }
 
-.faq-item h4::after {
-  content: '+';
-  font-size: 1.5rem;
+.fellowship-facts .k {
+  color: var(--faint);
   font-weight: 300;
-  transition: transform 0.3s ease;
-  color: var(--primary-dark-blue);
 }
 
-.faq-item.active {
-  background-color: rgba(0, 0, 0, 0.01);
+.fellowship-facts .v {
+  color: var(--ink);
+  text-align: right;
 }
 
-.faq-item.active h4::after {
-  content: '−';
-  transform: rotate(0deg);
+.fellowship-cta {
+  display: inline-block;
+  margin-top: 28px;
+  font-family: 'Geist', sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--yale-blue);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.fellowship-cta:hover {
+  opacity: 0.72;
+}
+
+.fellowship-right {
+  border-left: 1px solid var(--hairline-dark);
+  padding-left: clamp(28px, 4.5vw, 72px);
+}
+
+.week-row {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 18px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.week-row:first-child {
+  padding-top: 4px;
+}
+
+.week-num {
+  padding-top: 4px;
+  font-family: 'Geist', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+}
+
+.week-row h4 {
+  margin: 0;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.week-row p {
+  margin: 7px 0 0;
+  max-width: 62ch;
+  font-family: 'Geist', sans-serif;
+  font-weight: 300;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.curriculum-link {
+  display: inline-block;
+  margin-top: 26px;
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--hairline-dark);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.curriculum-link:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+/* Other programs — arrow-driven card carousel */
+
+.other-programs {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 3.5vw 80px;
+}
+
+.other-programs-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.other-programs-head h3 {
+  margin: 0;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.carousel-arrows {
+  display: flex;
+  gap: 10px;
+}
+
+.carousel-arrows button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-dark);
+  background: none;
+  color: var(--ink);
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.carousel-arrows button:hover {
+  border-color: var(--yale-blue);
+  color: var(--yale-blue);
+}
+
+.carousel-track {
+  display: flex;
+  gap: 16px;
+  margin-top: 28px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.program-card {
+  flex: 0 0 clamp(240px, 26vw, 320px);
+  scroll-snap-align: start;
+  border: 1px solid var(--hairline-dark);
+  padding: 26px 28px 30px;
+  box-sizing: border-box;
+}
+
+.program-card h4 {
+  margin: 12px 0 0;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.program-card p {
+  margin: 12px 0 0;
+  font-family: 'Geist', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* FAQ — two-column hairline items */
+
+.involve-faq {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 3.5vw 110px;
+}
+
+.involve-faq h3 {
+  margin: 0;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 clamp(28px, 5vw, 80px);
+  margin-top: 20px;
+}
+
+.faq-item {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.faq-item h5 {
+  margin: 0;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 500;
+  font-size: 15.5px;
+  color: var(--ink);
 }
 
 .faq-item p {
-  color: var(--text-primary-light);
-  line-height: 1.6;
-  font-size: 1.1rem;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: all 0.3s ease-in-out;
-  margin-top: 0;
+  margin: 10px 0 0;
+  font-family: 'Geist', sans-serif;
+  font-weight: 300;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--muted);
 }
 
-.faq-item.active p {
-  max-height: 500px;
-  opacity: 1;
-  margin-top: 1rem;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .fellowship-section {
-    padding: 8rem 0;
+@media screen and (max-width: 900px) {
+  .involve-hero {
+    height: 300px;
   }
 
-  .fellowship-content {
-    padding: 0 2rem;
+  .fellowship {
+    grid-template-columns: 1fr;
+  }
+
+  .fellowship-left {
+    position: static;
+    padding-right: 0;
+  }
+
+  .fellowship-right {
+    border-left: none;
+    padding-left: 0;
+    margin-top: 56px;
   }
 
   .faq-grid {
-    display: block;
-    gap: 2rem;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .pathway-weave {
+    display: none;
   }
 
-  .cta-links {
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 0 1rem;
-  }
-
-  .link-button {
-    width: calc(100% - 2rem);
-    text-align: center;
-    min-width: unset;
-    margin: 0 auto;
+  .pathway-stations {
+    display: grid;
   }
 }

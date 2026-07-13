@@ -2,12 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" sizes="48x48" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#ffffff" />
+    <!-- /apply is a stable URL for posters and bios; hosts without edge
+         redirects (see public/_redirects) fall back to this. Keep the
+         target in sync with INTEREST_FORM_URL in src/pages/Home.js. -->
+    <script>
+      if (window.location.pathname.replace(/\/+$/, '') === '/apply') {
+        window.location.replace('https://forms.yaleaia.org/general-interest/');
+      }
+    </script>
+    <!-- Set the theme before first paint so a saved dark preference never
+         flashes the light ground. Keep in sync with ThemeContext.js. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('yaia-theme');
+          if (t !== 'dark' && t !== 'light') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+          }
+          document.documentElement.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
     <meta
       name="description" 
-      content="Yale AI Alignment (YAIA) - Student organization focused on AI safety and alignment at Yale University"
+      content="Yale AI Alignment (YAIA) — a student organization focused on AI safety and alignment at Yale University"
     />
     <meta name="keywords" content="Yale, AI, Artificial Intelligence, AI Safety, AI Alignment, Student Organization" />
     <meta name="author" content="Yale AI Alignment" />
@@ -15,16 +39,24 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     
     <!-- Font imports -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
     
     
     <title>Yale AI Alignment | YAIA</title>
     
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:title" content="Yale AI Alignment (YAIA)" />
-    <meta property="og:description" content="Student organization focused on AI safety and alignment at Yale University" />
-    <meta property="og:image" content="%PUBLIC_URL%/logo512.png" />
+    <meta property="og:description" content="A student organization focused on AI safety and alignment at Yale University" />
+    <!-- absolute URL: most scrapers reject relative og:image paths -->
+    <meta property="og:image" content="https://yaleaia.org/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yaleaia.org" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Yale AI Alignment (YAIA)" />
+    <meta name="twitter:image" content="https://yaleaia.org/og-image.png" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
