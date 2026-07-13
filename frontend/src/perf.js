@@ -21,25 +21,28 @@ export function whenPerfTier(cb) {
 
   if (!started) {
     started = true;
-    const samples = [];
-    let prev = performance.now();
-    const probe = (now) => {
-      samples.push(now - prev);
-      prev = now;
-      if (samples.length < 50) {
-        requestAnimationFrame(probe);
-        return;
-      }
-      // drop the first frames (startup jank), classify on the median
-      const sorted = samples.slice(5).sort((a, b) => a - b);
-      const median = sorted[Math.floor(sorted.length / 2)];
-      tier = median > 20 ? 'low' : 'high'; // 20ms ≈ can't hold 50fps
-      if (tier === 'low') {
-        document.documentElement.classList.add('perf-low');
-      }
-      waiters.splice(0).forEach((w) => w(tier));
-    };
-    requestAnimationFrame(probe);
+    // wait out load jank (font loads, lottie parse, first paints) so we
+    // measure steady state, not startup
+    setTimeout(() => {
+      const samples = [];
+      let prev = performance.now();
+      const probe = (now) => {
+        samples.push(now - prev);
+        prev = now;
+        if (samples.length < 50) {
+          requestAnimationFrame(probe);
+          return;
+        }
+        const sorted = samples.slice(5).sort((a, b) => a - b);
+        const median = sorted[Math.floor(sorted.length / 2)];
+        tier = median > 20 ? 'low' : 'high'; // 20ms ≈ can't hold 50fps
+        if (tier === 'low') {
+          document.documentElement.classList.add('perf-low');
+        }
+        waiters.splice(0).forEach((w) => w(tier));
+      };
+      requestAnimationFrame(probe);
+    }, 1200);
   }
 
   return () => {

@@ -97,7 +97,9 @@ function ContourField() {
     }
 
     const dprSize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, q.low ? 1 : 2);
+      // touch renders a single static frame, so keep it sharp; slow
+      // desktops drop to 1.5x rather than a visibly crunchy 1x
+      const dpr = Math.min(window.devicePixelRatio || 1, isTouch ? 2 : q.low ? 1.5 : 2);
       const w = canvas.clientWidth, h = canvas.clientHeight;
       if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
         canvas.width = Math.round(w * dpr);
@@ -122,7 +124,9 @@ function ContourField() {
     const draw = (now) => {
       if (!running) return;
       frame++;
-      if (q.low && frame % 2) {
+      // skip only when rAF is genuinely fast; if the browser is already
+      // throttled to 30fps, skipping would halve to 15fps
+      if (q.low && frame % 2 && now - prev < 25) {
         raf = requestAnimationFrame(draw);
         return;
       }

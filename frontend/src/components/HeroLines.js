@@ -90,11 +90,14 @@ function HeroLines({ speed = 1 }) {
     const ctx = canvas.getContext('2d');
     const ink = INK[theme] || INK.light;
 
-    // Low tier: half the threads, coarser sampling, 1x pixels, 30fps.
+    // Low tier: half the threads, coarser sampling, fewer pixels, 30fps.
     const q = { low: false };
     const unsubPerf = whenPerfTier((t) => {
       q.low = t === 'low';
     });
+    // No cursor on touch devices: the spring/pluck layer is dead weight
+    // there, and the canvas is small enough to keep full resolution.
+    const isTouch = window.matchMedia('(hover: none)').matches;
 
     // Deterministic PRNG so the field looks the same on every load
     let seed = 1337;
@@ -143,12 +146,16 @@ function HeroLines({ speed = 1 }) {
       mouse.active = true;
     };
     const onLeave = () => { mouse.active = false; mouse.vx = 0; mouse.vy = 0; };
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseout', onLeave);
-    window.addEventListener('blur', onLeave);
+    if (!isTouch) {
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseout', onLeave);
+      window.addEventListener('blur', onLeave);
+    }
 
     const dprSize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, q.low ? 1 : 2);
+      // phones keep full sharpness (small canvas, 3x screens make 1x look
+      // crunchy); slow desktops drop to 1.5x, not 1x
+      const dpr = Math.min(window.devicePixelRatio || 1, isTouch ? 2 : q.low ? 1.5 : 2);
       const w = canvas.clientWidth, h = canvas.clientHeight;
       if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
         canvas.width = Math.round(w * dpr);
@@ -169,17 +176,22 @@ function HeroLines({ speed = 1 }) {
     const draw = (now) => {
       if (!running) return;
       frame++;
-      if (q.low && frame % 2) {
-        // 30fps on the low tier; dt below absorbs the doubled interval
+
+      // Parallax updates every rAF, even on skipped frames — a 30fps
+      // transform against native scrolling reads as vibration.
+      const sy = window.scrollY || 0;
+      wrap.style.transform = `translateY(${(sy * 0.35).toFixed(1)}px)`;
+
+      // 30fps canvas on the low tier — but only when rAF is actually
+      // running fast. If the browser is already throttled (iOS Low Power
+      // Mode runs rAF at 30fps), skipping would halve to 15fps.
+      if (q.low && frame % 2 && now - prev < 25) {
         raf = requestAnimationFrame(draw);
         return;
       }
       const dt = Math.min((now - prev) / 1000, 0.033);
       prev = now;
       t += dt * speed;
-
-      const sy = window.scrollY || 0;
-      wrap.style.transform = `translateY(${(sy * 0.35).toFixed(1)}px)`;
 
       const { w, h, dpr } = dprSize();
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -235,7 +247,8 @@ function HeroLines({ speed = 1 }) {
         const shiftSlow = CFG.tangleV * T.vJ * t;
 
         // --- interaction chain physics (springs rest at 0; ambient motion
-        // lives in the texture layer) ---
+        // lives in the texture layer); no cursor on touch, so skip it ---
+        if (!isTouch) {
         cpX[0] = 0; cpOff[0] = 0;
         for (let k = 0; k < K; k++) {
           const u = Math.pow((k + 1) / (K + 1), CFG.segmentBias);
@@ -272,6 +285,7 @@ function HeroLines({ speed = 1 }) {
           cpOff[k + 1] = P.off;
         }
         cpX[K + 1] = w; cpOff[K + 1] = 0;
+        }
 
         // brightness pulse traveling toward the stream; heat lerps the
         // stroke from grey toward yale blue while a pluck rings out
@@ -296,11 +310,14 @@ function HeroLines({ speed = 1 }) {
             calm;
 
           // interpolate the interaction chain's offset at this x
-          while (seg < K && cpX[seg + 1] < xc) seg++;
-          const span = cpX[seg + 1] - cpX[seg] || 1;
-          const f = (xc - cpX[seg]) / span;
-          const fs = f * f * (3 - 2 * f);
-          const springOff = cpOff[seg] * (1 - fs) + cpOff[seg + 1] * fs;
+          let springOff = 0;
+          if (!isTouch) {
+            while (seg < K && cpX[seg + 1] < xc) seg++;
+            const span = cpX[seg + 1] - cpX[seg] || 1;
+            const f = (xc - cpX[seg]) / span;
+            const fs = f * f * (3 - 2 * f);
+            springOff = cpOff[seg] * (1 - fs) + cpOff[seg + 1] * fs;
+          }
 
           const y = rest + wob + springOff;
           if (x === 0) ctx.moveTo(xc, y); else ctx.lineTo(xc, y);
