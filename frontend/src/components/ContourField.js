@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../ThemeContext';
+import { whenPerfTier } from '../perf';
 
 /*
  * Programs-page half-hero: closed topographic loops around two off-canvas
@@ -56,6 +57,14 @@ function ContourField() {
     const ink = INK[theme] || INK.light;
     const K = CFG.segments;
 
+    // The field's interactivity is cursor-only, so touch devices get a
+    // single static frame; slow devices get coarser sampling at 30fps.
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const q = { low: false };
+    const unsubPerf = whenPerfTier((t) => {
+      q.low = t === 'low';
+    });
+
     const rings = [];
     CFG.centers.forEach((center, ci) => {
       for (let k = 0; k < center.rings; k++) {
@@ -81,12 +90,14 @@ function ContourField() {
       mouse.active = true;
     };
     const onLeave = () => { mouse.active = false; mouse.vx = 0; mouse.vy = 0; };
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseout', onLeave);
-    window.addEventListener('blur', onLeave);
+    if (!isTouch) {
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseout', onLeave);
+      window.addEventListener('blur', onLeave);
+    }
 
     const dprSize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, q.low ? 1 : 2);
       const w = canvas.clientWidth, h = canvas.clientHeight;
       if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
         canvas.width = Math.round(w * dpr);
@@ -102,11 +113,19 @@ function ContourField() {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     let raf;
+    let running = false;
+    let frame = 0;
     let prev = performance.now();
     let t = 0;
     const TWO_PI = Math.PI * 2;
 
     const draw = (now) => {
+      if (!running) return;
+      frame++;
+      if (q.low && frame % 2) {
+        raf = requestAnimationFrame(draw);
+        return;
+      }
       const dt = Math.min((now - prev) / 1000, 0.033);
       prev = now;
       if (!reduceMotion.matches) t += dt;
@@ -169,7 +188,7 @@ function ContourField() {
 
         // draw the loop, smoothstep-interpolating spring offsets
         ctx.beginPath();
-        const S = 120;
+        const S = q.low ? 72 : 120;
         for (let s = 0; s <= S; s++) {
           const theta = (s / S) * TWO_PI;
           const fk = (theta / TWO_PI) * K;
@@ -188,12 +207,40 @@ function ContourField() {
         ctx.stroke();
       }
 
+      if (isTouch || reduceMotion.matches) {
+        running = false; // one composed frame is the whole show
+        return;
+      }
       raf = requestAnimationFrame(draw);
     };
-    raf = requestAnimationFrame(draw);
+
+    // Only simulate while the field is on screen
+    const start = () => {
+      if (running) return;
+      running = true;
+      prev = performance.now();
+      raf = requestAnimationFrame(draw);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) start();
+      else stop();
+    });
+    io.observe(canvas);
+
+    // the static (touch/reduced-motion) frame still needs a redraw when
+    // the viewport changes, e.g. phone rotation
+    const onResize = () => start();
+    window.addEventListener('resize', onResize);
 
     return () => {
-      cancelAnimationFrame(raf);
+      io.disconnect();
+      stop();
+      window.removeEventListener('resize', onResize);
+      unsubPerf();
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseout', onLeave);
       window.removeEventListener('blur', onLeave);

@@ -38,6 +38,20 @@
   pointer-events: none;
 }
 
+/* backdrop-filter over an animating canvas re-blurs the region every
+   frame — brutal on weak GPUs. Shed the blur layers on small screens and
+   on devices the perf probe classifies as slow; the fade carries the
+   dissolve alone. */
+@media screen and (max-width: 900px) {
+  .hero-blur {
+    display: none;
+  }
+}
+
+:root.perf-low .hero-blur {
+  display: none;
+}
+
 .hero-blur-near {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);

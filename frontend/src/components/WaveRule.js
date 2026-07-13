@@ -24,8 +24,11 @@ function WaveRule({ mirror = false }) {
       const ctx = canvas.getContext('2d');
       ctx.scale(dpr, dpr);
       ctx.beginPath();
+      // Match the site's hairline rules exactly, in whichever theme
       ctx.strokeStyle =
-        theme === 'dark' ? 'rgba(242, 245, 249, 0.5)' : 'rgba(23, 24, 26, 0.55)';
+        getComputedStyle(document.documentElement)
+          .getPropertyValue('--hairline-dark')
+          .trim() || '#E2E3E1';
       ctx.lineWidth = 1;
       const mid = h / 2;
       for (let x = 0; x <= w; x += 2) {

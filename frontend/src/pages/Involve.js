@@ -5,6 +5,7 @@ import '../styles/Involve.css';
 import ContourField from '../components/ContourField';
 import ProgramPathway from '../components/ProgramPathway';
 import Lettermark from '../components/Lettermark';
+import WaveRule from '../components/WaveRule';
 import { INTEREST_FORM_URL } from './Home';
 
 // Week descriptions are the curriculum's Overview paragraphs, verbatim.
@@ -239,6 +240,8 @@ function Involve() {
 
       <ProgramPathway />
 
+      <WaveRule />
+
       <section className="fellowship">
         <div className="fellowship-left">
           <div className="involve-eyebrow">FLAGSHIP</div>
@@ -298,7 +301,11 @@ function Involve() {
         </div>
       </section>
 
+      <WaveRule mirror />
+
       <ProgramCarousel />
+
+      <WaveRule />
 
       <section className="involve-faq">
         <h3>Frequently asked questions</h3>

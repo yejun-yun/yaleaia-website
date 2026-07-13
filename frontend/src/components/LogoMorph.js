@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import lottie from 'lottie-web';
+// the light build ships only the SVG renderer, which is all we use —
+// roughly half the bundle weight of the full player
+import lottie from 'lottie-web/build/player/lottie_light';
 import wordmarkAnimation from '../assets/wordmark.json';
 
 // px of scroll before the nav collapses; shared with the navbar pill state

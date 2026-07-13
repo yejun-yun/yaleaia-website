@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../ThemeContext';
+import { whenPerfTier } from '../perf';
 
 /*
  * Hero thread field. Lines run left to right and converge into a shared
@@ -89,6 +90,12 @@ function HeroLines({ speed = 1 }) {
     const ctx = canvas.getContext('2d');
     const ink = INK[theme] || INK.light;
 
+    // Low tier: half the threads, coarser sampling, 1x pixels, 30fps.
+    const q = { low: false };
+    const unsubPerf = whenPerfTier((t) => {
+      q.low = t === 'low';
+    });
+
     // Deterministic PRNG so the field looks the same on every load
     let seed = 1337;
     const rand = () => {
@@ -141,7 +148,7 @@ function HeroLines({ speed = 1 }) {
     window.addEventListener('blur', onLeave);
 
     const dprSize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, q.low ? 1 : 2);
       const w = canvas.clientWidth, h = canvas.clientHeight;
       if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
         canvas.width = Math.round(w * dpr);
@@ -155,9 +162,18 @@ function HeroLines({ speed = 1 }) {
     const cpOff = new Float64Array(K + 2);
 
     let raf;
+    let running = false;
+    let frame = 0;
     let prev = performance.now();
     let t = 0;
     const draw = (now) => {
+      if (!running) return;
+      frame++;
+      if (q.low && frame % 2) {
+        // 30fps on the low tier; dt below absorbs the doubled interval
+        raf = requestAnimationFrame(draw);
+        return;
+      }
       const dt = Math.min((now - prev) / 1000, 0.033);
       prev = now;
       t += dt * speed;
@@ -181,9 +197,33 @@ function HeroLines({ speed = 1 }) {
       const flowPhase = (t * CFG.flowSpeed) % 1;
       const spacing = w / (K + 1);
       const ellipse = 1 / (1 + spacing / CFG.mouseRadius);
-      const step = Math.max(10, w / 150);
+      const step = q.low ? Math.max(16, w / 90) : Math.max(10, w / 150);
 
-      for (const T of threads) {
+      // One gradient serves every unheated thread this frame; only threads
+      // mid-flash pay for their own (gradient allocation is expensive)
+      const gradientFor = (e) => {
+        const cr = Math.round(baseRGB[0] + (heatRGB[0] - baseRGB[0]) * e);
+        const cg = Math.round(baseRGB[1] + (heatRGB[1] - baseRGB[1]) * e);
+        const cb = Math.round(baseRGB[2] + (heatRGB[2] - baseRGB[2]) * e);
+        const g = ctx.createLinearGradient(0, 0, w, 0);
+        for (let si = 0; si <= 5; si++) {
+          const uu = si / 5;
+          let d = Math.abs(uu - flowPhase);
+          d = Math.min(d, 1 - d);
+          const ss = Math.max(0, 1 - d / CFG.flowWidth);
+          const a = Math.min(
+            1,
+            ink.alphaBase + (ink.alphaPeak - ink.alphaBase) * ss * ss * (3 - 2 * ss) + e * ink.heatAlpha
+          );
+          g.addColorStop(uu, `rgba(${cr},${cg},${cb},${a.toFixed(4)})`);
+        }
+        return g;
+      };
+      const coldGradient = gradientFor(0);
+
+      for (let ti = 0; ti < threads.length; ti++) {
+        if (q.low && ti % 2) continue; // half the field on slow devices
+        const T = threads[ti];
         T.heat *= Math.exp(-CFG.heatDecay * dt);
         if (T.heat < 0.002) T.heat = 0;
         const y0 = h * 0.03 + T.frac * h * 0.92;
@@ -235,23 +275,7 @@ function HeroLines({ speed = 1 }) {
 
         // brightness pulse traveling toward the stream; heat lerps the
         // stroke from grey toward yale blue while a pluck rings out
-        const e = T.heat;
-        const cr = Math.round(baseRGB[0] + (heatRGB[0] - baseRGB[0]) * e);
-        const cg = Math.round(baseRGB[1] + (heatRGB[1] - baseRGB[1]) * e);
-        const cb = Math.round(baseRGB[2] + (heatRGB[2] - baseRGB[2]) * e);
-        const g = ctx.createLinearGradient(0, 0, w, 0);
-        for (let si = 0; si <= 5; si++) {
-          const uu = si / 5;
-          let d = Math.abs(uu - flowPhase);
-          d = Math.min(d, 1 - d);
-          const ss = Math.max(0, 1 - d / CFG.flowWidth);
-          const a = Math.min(
-            1,
-            ink.alphaBase + (ink.alphaPeak - ink.alphaBase) * ss * ss * (3 - 2 * ss) + e * ink.heatAlpha
-          );
-          g.addColorStop(uu, `rgba(${cr},${cg},${cb},${a.toFixed(4)})`);
-        }
-        ctx.strokeStyle = g;
+        ctx.strokeStyle = T.heat === 0 ? coldGradient : gradientFor(T.heat);
 
         // --- per-x draw: converging rest + traveling texture + interaction ---
         ctx.beginPath();
@@ -286,10 +310,28 @@ function HeroLines({ speed = 1 }) {
 
       raf = requestAnimationFrame(draw);
     };
-    raf = requestAnimationFrame(draw);
+
+    // Only simulate while the hero is actually on screen
+    const start = () => {
+      if (running) return;
+      running = true;
+      prev = performance.now();
+      raf = requestAnimationFrame(draw);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) start();
+      else stop();
+    });
+    io.observe(wrap);
 
     return () => {
-      cancelAnimationFrame(raf);
+      io.disconnect();
+      stop();
+      unsubPerf();
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseout', onLeave);
       window.removeEventListener('blur', onLeave);
