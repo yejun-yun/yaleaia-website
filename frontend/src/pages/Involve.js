@@ -141,7 +141,7 @@ const OTHER_PROGRAMS = [
     stage: 'DISCOVER',
     title: 'Hackathons',
     blurb:
-      'In Fall 2026, YAIA will host the inagural Yale AI Safety Hackathon.'
+      'In Fall 2026, YAIA will host the inaugural Yale AI Safety Hackathon.'
   },
   {
     stage: 'DISCOVER',
