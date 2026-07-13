@@ -6,7 +6,7 @@ import MissionScroller from '../components/MissionScroller';
 import WaveRule from '../components/WaveRule';
 import '../styles/Home.css';
 
-export const INTEREST_FORM_URL = 'https://forms.gle/vmNG2pdZBcdwdU1X6';
+export const INTEREST_FORM_URL = 'https://forms.yaleaia.org/general-interest/';
 
 function Home() {
   return (
