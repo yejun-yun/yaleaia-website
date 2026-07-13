@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './pages/Navbar';
 import Home, { INTEREST_FORM_URL } from './pages/Home';
-import About from './pages/About';
 import Involve from './pages/Involve';
 import Curriculum from './pages/Curriculum';
 import Footer from './pages/Footer';
@@ -26,10 +25,11 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
             <Route path="/involve" element={<Involve />} />
             <Route path="/curriculum" element={<Curriculum />} />
             <Route path="/apply" element={<ApplyRedirect />} />
+            {/* stale links (e.g. the old /about) land on the homepage */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
           <Footer />
         </div>

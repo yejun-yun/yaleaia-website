@@ -109,8 +109,9 @@ const OTHER_PROGRAMS = [
     stage: 'ENGAGE',
     title: 'Paper reading group',
     blurb:
-      'Members meet weekly to read and discuss recent papers and other recent developments in strategy, governance, capabilities research, and technical ' +
-      'AI safety',
+      'Members meet weekly to read and discuss recent papers and other ' +
+      'developments in strategy, governance, capabilities research, and ' +
+      'technical AI safety.',
   },
   {
     stage: 'ENGAGE',
@@ -124,7 +125,10 @@ const OTHER_PROGRAMS = [
     stage: 'CONTRIBUTE',
     title: 'Research support',
     blurb:
-      'YAIA supports members pursuing technical AI safety research through mentorship support, research coworking groups, compute access, application workshops to technical research programs, and other initiatives.'
+      'YAIA supports members pursuing technical AI safety research ' +
+      'through mentorship, research coworking groups, compute access, ' +
+      'application workshops for technical research programs, and other ' +
+      'initiatives.'
   },
   {
     stage: 'ENGAGE',
@@ -273,6 +277,10 @@ function Involve() {
             <li>
               <span className="k">Eligibility</span>
               <span className="v">All Yale students</span>
+            </li>
+            <li>
+              <span className="k">Applications</span>
+              <span className="v">Closed for Summer ’26</span>
             </li>
           </ul>
           <a
