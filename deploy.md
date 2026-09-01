@@ -34,8 +34,11 @@ build for hosts that use it, such as GitHub Pages.
 
 ## After deploying
 
-1. Visit `https://yaleaia.org` and click through `/`, `/#/involve`,
-   `/#/curriculum` (the app uses hash routing, so deep links work on any
-   static host without rewrite rules)
+1. Visit `https://yaleaia.org` and click through `/`, `/involve`,
+   `/curriculum`. The app uses path routing, so the host must serve
+   `index.html` for unknown paths; `public/_redirects` does this on
+   Cloudflare Pages and Netlify, and other hosts need the equivalent
+   SPA-fallback rule. Old `/#/involve`-style links are rewritten
+   client-side.
 2. Confirm `/curriculum` renders — it fetches `curriculum.md` from the
    site root at runtime
