@@ -1,0 +1,12 @@
+# OS / editor
+.DS_Store
+.claude/worktrees/
+.claude/*.local.json
+
+# Design working files kept alongside the repo, not part of the site
+Homepage Directions.dc.html
+YAIA Website Revamp/
+YAIA Y icon.svg
+
+# Stray copy; the served file is frontend/public/curriculum.md
+/curriculum.md
