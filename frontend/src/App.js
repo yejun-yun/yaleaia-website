@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'r
 import Navbar from './pages/Navbar';
 import Home, { INTEREST_FORM_URL } from './pages/Home';
 import Involve from './pages/Involve';
-import Curriculum from './pages/Curriculum';
 import Footer from './pages/Footer';
 import { ThemeProvider } from './ThemeContext';
 import './styles/App.css';
@@ -41,7 +40,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/involve" element={<Involve />} />
-            <Route path="/curriculum" element={<Curriculum />} />
             <Route path="/apply" element={<ApplyRedirect />} />
             {/* stale links (e.g. the old /about) land on the homepage */}
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -14,14 +14,19 @@ const CENTER_Y = PATHWAY_HEIGHT * 0.52;
 const DOT_ANCHOR = 14; // node divs are translated -50%; dots sit this far up
 
 const STAGES = [
-  { x: 0.09, label: 'DISCOVER', items: ['Hackathons', 'Outreach', 'Events'] },
-  { x: 0.38, label: 'LEARN', items: ['Technical AI Safety Fellowship'], main: true },
+  { x: 0.09, label: 'DISCOVER', items: ['Speaker events', 'Outreach', 'Socials'] },
+  {
+    x: 0.38,
+    label: 'LEARN',
+    items: ['Future of AI Fellowship', 'Technical AI Safety Fellowship'],
+    main: true,
+  },
   {
     x: 0.66,
     label: 'ENGAGE',
-    items: ['Tracks program', 'Reading group', 'Retreats', 'Conferences'],
+    items: ['Official membership', 'Reading group', 'Retreats', 'Conferences'],
   },
-  { x: 0.91, label: 'CONTRIBUTE', items: ['Research support', 'Careers'] },
+  { x: 0.91, label: 'CONTRIBUTE', items: ['Research support', 'Organizing', 'Careers'] },
 ];
 
 const itemY = (i, count) => CENTER_Y + (i - (count - 1) / 2) * NODE_SPACING;

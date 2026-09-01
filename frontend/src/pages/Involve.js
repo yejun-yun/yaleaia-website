@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import '../styles/Involve.css';
 import ContourField from '../components/ContourField';
@@ -8,99 +7,49 @@ import Lettermark from '../components/Lettermark';
 import WaveRule from '../components/WaveRule';
 import { INTEREST_FORM_URL } from './Home';
 
-// Week descriptions are the curriculum's Overview paragraphs, verbatim.
-const WEEKS = [
+const FELLOWSHIPS = [
   {
-    num: '00',
-    title: 'Machine learning fundamentals',
+    title: 'Future of AI Fellowship',
     blurb:
-      'This week is optional and completed asynchronously. The goal is to ' +
-      'ensure that fellows have a basic technical understanding of machine ' +
-      'learning, which will help them grasp some of the research we cover ' +
-      'in the fellowship. Many fellows already have this background and do ' +
-      'not need to complete material for Week 0.',
+      'What does the best empirical evidence actually suggest about AI ' +
+      'progress? How intelligent could AI become in the future, and what ' +
+      'could it do? Will AI assist bad actors in conducting massive ' +
+      'cyberattacks, creating biological weapons, and staging coups? How ' +
+      'can we mitigate these risks through approaches within policy, ' +
+      'governance, advocacy, communications, and field-building? What are ' +
+      'the strongest counterarguments to our concerns?',
+    facts: [
+      { k: 'Prerequisites', v: 'None' },
+      {
+        k: 'Intended audience',
+        v:
+          'Anyone interested in AI risk through paths other than technical ' +
+          'research, including aspiring policymakers, political staffers, ' +
+          'civil servants, advocates, communicators, generalists, and more.',
+      },
+    ],
   },
   {
-    num: '01',
-    title: 'Superintelligence and the current trajectory',
+    title: 'Technical AI Safety Fellowship',
     blurb:
-      'This week grounds participants in the empirical basis for the ' +
-      'near-term development of advanced AI. The readings cover the ' +
-      'current state of the frontier of AI models, the scaling trends ' +
-      'that inform near-term capability forecasts, and the argument that ' +
-      'once AI can accelerate AI research, the path to superintelligence ' +
-      'may be shorter than intuition suggests.',
-  },
-  {
-    num: '02',
-    title: 'Superintelligent capabilities and will',
-    blurb:
-      'This week covers what superintelligence could do and what it might ' +
-      'want. The readings cover the argument that a sufficiently capable ' +
-      'system could overpower humanity collectively, the orthogonality ' +
-      'thesis, instrumental convergence, and the problem of alignment ' +
-      'target selection.',
-  },
-  {
-    num: '03',
-    title: 'Misalignment risks',
-    blurb:
-      'This week covers the ways alignment can fail and whether current ' +
-      'systems already show signs of failure. The readings cover the ' +
-      'difference between outer alignment and inner alignment and ' +
-      "evidence that today's models are somewhat misaligned.",
-  },
-  {
-    num: '04',
-    title: 'Misuse risks',
-    blurb:
-      'This week covers the ways capable AI could amplify what malicious ' +
-      'actors can do. The readings cover biorisk, where models may give ' +
-      'novices uplift toward engineering catastrophic pathogens; ' +
-      'cybersecurity, where frontier systems are gaining offensive ' +
-      'capability; and the risk that AI could let a small group seize and ' +
-      'hold power, including through a coup.',
-  },
-  {
-    num: '05',
-    title: 'Scalable oversight and automated alignment',
-    blurb:
-      'This week covers one of the main suggested approaches to aligning ' +
-      'a superintelligence: handing off the problem to models more ' +
-      'capable than ourselves. Scalable oversight asks how humans can ' +
-      'train and evaluate models that outstrip them, with weak-to-strong ' +
-      'generalization as one empirical handle. Automated alignment asks ' +
-      'whether we can hand the alignment problem itself to AI, and why ' +
-      'delegating it may be harder than it sounds.',
-  },
-  {
-    num: '06',
-    title: 'AI control',
-    blurb:
-      'This week covers one approach to safety that does not require ' +
-      'solving alignment outright. Control asks how we can extract useful ' +
-      'work from powerful AIs, limit the damage they can do, and ' +
-      'incriminate them, even assuming they may be misaligned and trying ' +
-      'to subvert us.',
-  },
-  {
-    num: '07',
-    title: 'Mechanistic interpretability and evals',
-    blurb:
-      'This week introduces two of the most important empirical ' +
-      'approaches to understanding what frontier models are doing under ' +
-      'the hood: mechanistic interpretability and evaluations. The week ' +
-      'emphasizes how these two threads are converging into alignment ' +
-      'auditing: using interpretability tools to check whether a model ' +
-      'has the goals it appears to have.',
-  },
-  {
-    num: '08',
-    title: 'AI safety careers',
-    blurb:
-      'The course closes by turning from the problem to the participant: ' +
-      'how to actually contribute. The readings survey the landscape of ' +
-      'AI safety career paths.',
+      'What are the most rigorous empirical approaches for modeling and ' +
+      'predicting AI progress? Can we use theoretical frameworks to ' +
+      'predict certain behaviors or tendencies of superintelligences? How ' +
+      'does research in mechanistic interpretability, evaluations, ' +
+      'control, and alignment science contribute to mitigating AI risks? ' +
+      'Are there tractable technical approaches to preventing issues like ' +
+      'goal misgeneralization and specification gaming? What does this ' +
+      'research look like, day-to-day, hands-on?',
+    facts: [
+      {
+        k: 'Prerequisites',
+        v: 'Empirical ML background, linear algebra, multivariate calculus',
+      },
+      {
+        k: 'Intended audience',
+        v: 'Future technical researchers in AI safety, strategy, or forecasting.',
+      },
+    ],
   },
 ];
 
@@ -143,12 +92,6 @@ const OTHER_PROGRAMS = [
       'YAIA sends groups to AI safety-related conferences, like ControlConf and EAG, also facilitating member connections to professionals and mentors in the field and others in the AI safety community.'  },
   {
     stage: 'DISCOVER',
-    title: 'Hackathons',
-    blurb:
-      'In Fall 2026, YAIA will host the inaugural Yale AI Safety Hackathon.'
-  },
-  {
-    stage: 'DISCOVER',
     title: 'Events',
     blurb:
       'YAIA hosts speakers, panels, and discussions throughout the term.'
@@ -158,21 +101,20 @@ const OTHER_PROGRAMS = [
 const FAQS = [
   {
     q: 'Who can apply?',
-    a: 'The fellowship is open to all Yale students, in any department or program.',
+    a: 'The fellowships are open to all Yale students, in any department or program.',
   },
   {
     q: 'How much ML experience do I need?',
     a:
-      'Familiarity with basic concepts helps, and cohorts are grouped by ' +
-      'experience. The optional Week 0 primer covers the fundamentals ' +
-      'asynchronously.',
+      'None for the Future of AI Fellowship. The Technical AI Safety ' +
+      'Fellowship expects an empirical ML background, linear algebra, and ' +
+      'multivariate calculus.',
   },
   {
     q: 'When and where are meetings?',
     a:
       'We collect availability in the application and schedule cohorts ' +
-      'around it. Summer cohorts meet online; academic-year cohorts meet ' +
-      'in person.',
+      'around it. Cohorts meet weekly in person, and dinner is provided.',
   },
   {
     q: 'Already know this material?',
@@ -230,7 +172,7 @@ function Involve() {
         <title>Programs — Yale AI Alignment</title>
         <meta
           name="description"
-          content="YAIA's Technical AI Safety Fellowship, paper reading group, and community programs."
+          content="YAIA's Future of AI and Technical AI Safety Fellowships, paper reading group, and community programs."
         />
       </Helmet>
 
@@ -250,37 +192,35 @@ function Involve() {
         <div className="fellowship-left">
           <div className="involve-eyebrow">FLAGSHIP</div>
           <h2>
-            <Lettermark className="fellowship-logo" /> Technical AI Safety
-            Fellowship
+            <Lettermark className="fellowship-logo" /> Fall fellowships
           </h2>
           <p>
-            YAIA runs a selective fellowship on technical AI safety every
-            fall, spring, and summer, covering topics like AI futures,
-            misalignment and misuse risks, scalable oversight, control, and
-            mechanistic interpretability. The fellowship meets weekly in
-            small cohorts for one hour and aims to prepare participants for
-            further learning and direct contribution in technical AI safety.
+            This fall, YAIA is running our Technical AI Safety Fellowship
+            and a new Future of AI Fellowship, for which no technical
+            background is required. Fellowships meet weekly in small
+            cohorts, and dinner is provided. All readings are done during
+            the meetings, with none outside.
           </p>
           <ul className="fellowship-facts">
             <li>
-              <span className="k">Next cohort</span>
-              <span className="v">Fall 2026</span>
+              <span className="k">Applications</span>
+              <span className="v">Open until September 10, rolling</span>
             </li>
             <li>
-              <span className="k">Offered</span>
-              <span className="v">Every fall, spring, and summer</span>
+              <span className="k">Time commitment</span>
+              <span className="v">2-hour weekly meeting, 7 weeks</span>
             </li>
             <li>
               <span className="k">Format</span>
-              <span className="v">Weekly 1-hour cohort meetings</span>
+              <span className="v">Small cohorts, dinner provided</span>
+            </li>
+            <li>
+              <span className="k">Readings</span>
+              <span className="v">Done during meetings</span>
             </li>
             <li>
               <span className="k">Eligibility</span>
               <span className="v">All Yale students</span>
-            </li>
-            <li>
-              <span className="k">Applications</span>
-              <span className="v">Closed for Summer ’26</span>
             </li>
           </ul>
           <a
@@ -289,23 +229,25 @@ function Involve() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Join the interest list →
+            Apply →
           </a>
         </div>
 
         <div className="fellowship-right">
-          {WEEKS.map((week) => (
-            <div className="week-row" key={week.num}>
-              <span className="week-num">{week.num}</span>
-              <div>
-                <h4>{week.title}</h4>
-                <p>{week.blurb}</p>
-              </div>
-            </div>
+          {FELLOWSHIPS.map((program) => (
+            <article className="fellowship-program" key={program.title}>
+              <h3>{program.title}</h3>
+              <p>{program.blurb}</p>
+              <ul className="program-facts">
+                {program.facts.map((fact) => (
+                  <li key={fact.k}>
+                    <span className="k">{fact.k}</span>
+                    <span className="v">{fact.v}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
           ))}
-          <Link className="curriculum-link" to="/curriculum">
-            Read the full curriculum, with all readings →
-          </Link>
         </div>
       </section>
 

@@ -12,9 +12,7 @@ the build.
 ```
 yaleaia-website/
 └── frontend/
-    ├── public/
-    │   ├── curriculum.md   # fellowship curriculum, rendered at /curriculum
-    │   └── ...             # static assets, favicon, CNAME
+    ├── public/         # static assets, favicon, CNAME
     └── src/
         ├── pages/          # one component per route + Navbar/Footer
         ├── components/     # hero canvases, wave rules, logo morph, pathway
@@ -25,11 +23,8 @@ yaleaia-website/
 ## Routes
 
 - `/` — home: interactive thread-field hero, mission scroller, CAIS quote
-- `/involve` — programs: contour-field hero, program pathway, fellowship,
-  FAQ
-- `/curriculum` — the fellowship curriculum, parsed and rendered from
-  `public/curriculum.md`
-- `/about` — about page
+- `/involve` — programs: contour-field hero, program pathway, fall
+  fellowships, FAQ
 
 ## Development
 
@@ -39,16 +34,6 @@ npm install
 npm start        # dev server on localhost:3000
 npm run build    # production build in frontend/build
 ```
-
-## Updating the curriculum
-
-Replace `frontend/public/curriculum.md` with the new export and redeploy.
-The `/curriculum` page parses it at runtime: weeks are detected from
-`**Week N: Title**` lines, and Overview / Learning Objectives / Core /
-Recommended / Supplementary sections within each week. Placeholder
-`- TBD` bullets are filtered out automatically. If a future export
-renames section headers, adjust `SECTION_KEYS` in
-`src/pages/Curriculum.js`.
 
 ## Deployment
 
