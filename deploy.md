@@ -43,5 +43,3 @@ build for hosts that use it, such as GitHub Pages.
    `/curriculum`. The app uses path routing, so the host must serve
    `index.html` for unknown paths (Vercel does this by default for CRA).
    Old `/#/involve`-style links are rewritten client-side.
-2. Confirm `/curriculum` renders — it fetches `curriculum.md` from the
-   site root at runtime
