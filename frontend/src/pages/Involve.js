@@ -5,7 +5,7 @@ import ContourField from '../components/ContourField';
 import ProgramPathway from '../components/ProgramPathway';
 import Lettermark from '../components/Lettermark';
 import WaveRule from '../components/WaveRule';
-const APPLY_URL = 'https://forms.yaleaia.org/fellowship-application/';
+export const APPLY_URL = 'https://forms.yaleaia.org/fellowship-application/';
 
 const FELLOWSHIPS = [
   {
