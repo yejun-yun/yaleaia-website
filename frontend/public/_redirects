@@ -1,4 +1,6 @@
 /apply https://forms.yaleaia.org/general-interest/ 302
 /apply/ https://forms.yaleaia.org/general-interest/ 302
+/qr /involve 302
+/QR /involve 302
 # SPA fallback: the app uses path routing, so unknown paths must serve index.html
 /* /index.html 200
