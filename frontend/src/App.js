@@ -41,6 +41,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/involve" element={<Involve />} />
             <Route path="/apply" element={<ApplyRedirect />} />
+            {/* stable address for printed QR codes; case-insensitive match */}
+            <Route path="/qr" element={<Navigate to="/involve" replace />} />
             {/* stale links (e.g. the old /about) land on the homepage */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
