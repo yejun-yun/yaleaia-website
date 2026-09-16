@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 import LogoMorph, { COLLAPSE_AT } from '../components/LogoMorph';
 import { useTheme } from '../ThemeContext';
-import { APPLY_URL } from './Involve';
+import { INTEREST_FORM_URL } from './Home';
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,12 +32,12 @@ function Navbar() {
             <Link to="/involve" onClick={closeMenu}>Programs</Link>
             <a
               className="navbar-cta"
-              href={APPLY_URL}
+              href={INTEREST_FORM_URL}
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenu}
             >
-              Apply →
+              Interest form →
             </a>
             <button
               className="theme-switch"
