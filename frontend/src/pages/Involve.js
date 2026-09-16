@@ -5,7 +5,7 @@ import ContourField from '../components/ContourField';
 import ProgramPathway from '../components/ProgramPathway';
 import Lettermark from '../components/Lettermark';
 import WaveRule from '../components/WaveRule';
-export const APPLY_URL = 'https://forms.yaleaia.org/fellowship-application/';
+import { INTEREST_FORM_URL } from './Home';
 
 const FELLOWSHIPS = [
   {
@@ -204,7 +204,7 @@ function Involve() {
           <ul className="fellowship-facts">
             <li>
               <span className="k">Applications</span>
-              <span className="v">Open until September 10, rolling</span>
+              <span className="v">Closed for Fall 2026</span>
             </li>
             <li>
               <span className="k">Time commitment</span>
@@ -225,11 +225,11 @@ function Involve() {
           </ul>
           <a
             className="fellowship-cta"
-            href={APPLY_URL}
+            href={INTEREST_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
           >
-            Apply →
+            Join the interest list →
           </a>
         </div>
 
